@@ -1,20 +1,35 @@
 #include "Ash.h"
 
-Ash::Ash() : m_x(0), m_y(0){}
-Ash::Ash(int inicioX, int inicioY) : m_x(inicioX), m_y(inicioY){}
+Player::Player() : m_x(0), m_y(0){}
+Player::Player(int inicioX, int inicioY) : m_x(inicioX), m_y(inicioY){}
 
-int Ash::getY() const {
+int Player::getY() const {
 	return m_y;
 }
 
-int Ash::getX() const {
+int Player::getX() const {
 	return m_x;
 }
 
-void Ash::setPosition(int x, int y) {
+void Player::setPosition(int x, int y) {
+	//Check first validity of input
 	m_x = x;
 	m_y = y;
 }
-//void Ash::move(int direX, int direY) {
-//
-//}
+
+void Player::move(short direction) {
+	switch (direction) {
+	case VK_UP:
+		setPosition(m_x, m_y + 1);
+		break;
+	case VK_LEFT:
+		setPosition(m_x - 1, m_y);
+		break;
+	case VK_DOWN:
+		setPosition(m_x, m_y - 1);
+		break;
+	case VK_RIGHT:
+		setPosition(m_x + 1, m_y);
+		break;
+	}
+}

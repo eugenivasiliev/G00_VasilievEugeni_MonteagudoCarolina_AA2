@@ -7,10 +7,10 @@
 class PlayerView
 {
 public:
-	PlayerView(Map& map, Ash& ash, Datos& datos);
+	PlayerView(Map& map, Player& ash, Datos& datos);
 	void update(Datos& datos); //actualiza la vista del jugador
 	void draw() const;
-	void updatePositionPlayer(Ash& ash);
+	void updatePositionPlayer(Player& ash);
 
 private:
 	static const int VIEW_WIDTH = 50; // Ancho de la vista del jugador

@@ -1,20 +1,20 @@
 #pragma once
 #ifndef ASH_H
 #define ASH_H
-
+#include <Windows.h>
 
 class Map;
 
 //empieza en el pueblo paleta
-class Ash
+class Player
 {
 public:
-	Ash();
-	Ash(int inicioX, int inicioY); //constructor con cordenadas iniciales
-	int getY() const;
+	Player();
+	Player(int inicioX, int inicioY); //constructor con cordenadas iniciales
 	int getX() const;
+	int getY() const;
 	void setPosition(int x, int y);
-	//void move(int direX, int direY);
+	void move(short direction);
 
 private:
 	int m_x;

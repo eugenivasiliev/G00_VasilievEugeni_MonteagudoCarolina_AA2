@@ -2,7 +2,7 @@
 #include "Ash.h"
 #include <iostream>
 
-PlayerView::PlayerView(Map& map, Ash& ash, Datos& datos) : m_map(map), m_ashX(0), m_ashY(0), m_viewWidth(0), m_viewHeight(0){
+PlayerView::PlayerView(Map& map, Player& ash, Datos& datos) : m_map(map), m_ashX(0), m_ashY(0), m_viewWidth(0), m_viewHeight(0){
 	m_ashX = ash.getX();
 	m_ashY = ash.getY();
 	m_viewWidth = datos.width / 2;
@@ -70,7 +70,7 @@ void PlayerView::draw() const {
 	}
 }
 
-void PlayerView::updatePositionPlayer(Ash& ash) {
+void PlayerView::updatePositionPlayer(Player& ash) {
 	m_ashX = ash.getX();
 	m_ashY = ash.getY();
 }

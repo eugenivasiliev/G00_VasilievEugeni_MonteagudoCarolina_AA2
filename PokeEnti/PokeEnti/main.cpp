@@ -4,9 +4,11 @@
 #include "Map.h"
 #include "Ash.h"
 #include "PlayerView.h"
+#include "Game.h"
 
 int main() {
-	ReadDoc reader("config,txt");
+	Game game;
+	/*ReadDoc reader("config,txt");
 	if (reader.readData()) {
 		Datos datos = reader.getinfoData();
 
@@ -14,7 +16,7 @@ int main() {
 		map.draw(); //dibujar mapa
 
 		Ash ash(12,17); // Inicializar a Ash en el centro del mapa
-		
+
 		PlayerView playerView(map, ash, datos);
 
 		playerView.update(datos);
@@ -32,8 +34,9 @@ int main() {
 		// Ejemplo de movimiento de Ash (hacia la derecha)
 		/*ash.setPosition(20, 17);
 		playerView.updatePositionPlayer(ash);
-		map.draw();*/
-	}
+		map.draw();
+	}*/
 
+	while (game.GameLoop());
 	return 0;
 }
