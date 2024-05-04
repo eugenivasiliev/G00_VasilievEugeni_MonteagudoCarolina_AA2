@@ -1,4 +1,9 @@
-﻿  InputManager.cpp
+﻿  Game.cpp
+C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(7,29): warning C4244: '=': conversión de 'ULONGLONG' a 'long'; posible pérdida de datos
+C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(25,27): warning C4244: '=': conversión de 'ULONGLONG' a 'long'; posible pérdida de datos
+  main.cpp
+  Generando código...
+C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(27): warning C4715: 'Game::GameLoop': no todas las rutas de acceso de control devuelven un valor
   PokeEnti.vcxproj -> C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\x64\Debug\PokeEnti.exe
   "pwsh.exe" no se reconoce como un comando interno o externo,
   programa o archivo por lotes ejecutable.
