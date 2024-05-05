@@ -128,11 +128,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ash.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="PlayerView.cpp" />
     <ClCompile Include="ReadDoc.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -142,7 +142,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="PlayerView.h" />
     <ClInclude Include="ReadDoc.h" />
   </ItemGroup>
   <ItemGroup>

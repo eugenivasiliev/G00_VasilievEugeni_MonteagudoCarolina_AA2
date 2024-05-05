@@ -1,9 +1,14 @@
-﻿  Game.cpp
-C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(7,29): warning C4244: '=': conversión de 'ULONGLONG' a 'long'; posible pérdida de datos
-C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(25,27): warning C4244: '=': conversión de 'ULONGLONG' a 'long'; posible pérdida de datos
+﻿  Ash.cpp
+  Camera.cpp
+C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Ash.h(21,46): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Ash.h(21,46): error C2143: error de sintaxis: falta ',' delante de '&'
+  Game.cpp
+C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(23,29): warning C4244: '=': conversión de 'ULONGLONG' a 'long'; posible pérdida de datos
+C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(49,27): warning C4244: '=': conversión de 'ULONGLONG' a 'long'; posible pérdida de datos
   main.cpp
+C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Ash.h(21,46): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Ash.h(21,46): error C2143: error de sintaxis: falta ',' delante de '&'
+  Map.cpp
+C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Ash.h(21,46): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
+C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Ash.h(21,46): error C2143: error de sintaxis: falta ',' delante de '&'
   Generando código...
-C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(27): warning C4715: 'Game::GameLoop': no todas las rutas de acceso de control devuelven un valor
-  PokeEnti.vcxproj -> C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\x64\Debug\PokeEnti.exe
-  "pwsh.exe" no se reconoce como un comando interno o externo,
-  programa o archivo por lotes ejecutable.

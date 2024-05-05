@@ -1,35 +1,54 @@
 #include "Ash.h"
+#include <iostream>
 
-Player::Player() : m_x(0), m_y(0){}
-Player::Player(int inicioX, int inicioY) : m_x(inicioX), m_y(inicioY){}
+std::pair<int, int> operator+ (const std::pair<int, int>& l, const std::pair<int, int>& r);
+void operator+= (std::pair<int, int>& l, const std::pair<int, int>& r);
 
-int Player::getY() const {
-	return m_y;
-}
+Player::Player() : m_position({ 0,0 }), m_orientation('>'), m_capturedPokemon(0) {}
+Player::Player(int x, int y) : m_position({ x, y }), m_orientation('>'), m_capturedPokemon(0) {}
 
 int Player::getX() const {
-	return m_x;
+	return m_position.first;
 }
 
-void Player::setPosition(int x, int y) {
+int Player::getY() const {
+	return m_position.second;
+}
+
+int Player::getCapturedPokemon() const {
+	return m_capturedPokemon;
+}
+
+void Player::setPosition(std::pair<int, int> newPos) {
 	//Check first validity of input
-	m_x = x;
-	m_y = y;
+	m_position = newPos;
 }
 
-void Player::move(short direction) {
+void Player::move(const short &direction, const Map &tiles) {
 	switch (direction) {
 	case VK_UP:
-		setPosition(m_x, m_y + 1);
+		if (tiles(m_position + UP) == ' ')
+			m_position += UP;
+		m_orientation = '^';
 		break;
 	case VK_LEFT:
-		setPosition(m_x - 1, m_y);
+		if (tiles(m_position + LEFT) == ' ')
+			m_position += LEFT;
+		m_orientation = '<';
 		break;
 	case VK_DOWN:
-		setPosition(m_x, m_y - 1);
+		if (tiles(m_position + DOWN) == ' ')
+			m_position += DOWN;
+		m_orientation = 'v';
 		break;
 	case VK_RIGHT:
-		setPosition(m_x + 1, m_y);
+		if (tiles(m_position + RIGHT) == ' ')
+			m_position += RIGHT;
+		m_orientation = '>';
 		break;
 	}
+}
+
+void Player::draw() {
+	std::cout << m_orientation;
 }
