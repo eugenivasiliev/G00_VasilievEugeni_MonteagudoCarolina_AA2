@@ -3,8 +3,10 @@
 
 class InputManager {
 public:
+	InputManager();
 	short GetCurrentInput();
 	void ProcessInput();
+	~InputManager();
 private:
-	std::queue<short> inputs;
+	std::queue<short> m_inputs;
 };

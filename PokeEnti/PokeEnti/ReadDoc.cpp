@@ -1,36 +1,51 @@
 #include "ReadDoc.h"
 #include <iostream>
 #include <fstream>
-#include <sstream>
+#define DIVIDER ';'
 
 ReadDoc::ReadDoc(const std::string& fileName) : m_fileName(fileName) {}
 
-bool ReadDoc::readData() {
+bool ReadDoc::readData(Data &data_) {
 	std::string fileName = "config.txt";
 	std::ifstream file(fileName);
+
 	if (!file.is_open()) {
-		std::cout << "Error";
+		std::cout << "ERROR in opening config.txt";
 		return false;
 	}
 
+	int mapWidth, mapHeight,
+		palletTownStartPokemon, palletTownCondition,
+		forestStartPokemon, forestCondition;
 
-	char separadores;
-	file >> m_width >> separadores >> m_height >> separadores; //1a linea del txt
-	file >> m_numPPaleta >> separadores >> m_numPPDesblock >> separadores; //2a linea del txt
-	file >> m_numBosque >> separadores >> m_numBDesblock >> separadores; //3a linea del txt
+	char divider = DIVIDER;
+	file >> mapWidth >> divider;
+	if(!assertFormat(divider)) return false;
+	file >> mapHeight >> divider;
+	if(!assertFormat(divider)) return false;
+	file >> palletTownStartPokemon >> divider;
+	if (!assertFormat(divider)) return false;
+	file >> palletTownCondition >> divider;
+	if (!assertFormat(divider)) return false;
+	file >> forestStartPokemon >> divider;
+	if (!assertFormat(divider)) return false;
+	file >> forestCondition;
 
 	file.close();
+
+	data_ = { mapWidth, mapHeight, 
+		palletTownStartPokemon, palletTownCondition, 
+		forestStartPokemon, forestCondition };
+
+	return true;
 }
 
-Datos ReadDoc::getinfoData() const {
-	Datos dato;
-	dato.width = m_width;
-	dato.height = m_height;
-	dato.numPPaleta = m_numPPaleta;
-	dato.numPPDesblock = m_numPPDesblock;
-	dato.numBosque = m_numBosque;
-	dato.numBDesblock = m_numBDesblock;
-	return dato;
+bool ReadDoc::assertFormat(char divider) {
+	if (divider != DIVIDER) {
+		std::cout << "ERROR in config.txt format (wrong divider)";
+		return false;
+	}
+	return true;
 }
 
 ReadDoc::~ReadDoc() {}

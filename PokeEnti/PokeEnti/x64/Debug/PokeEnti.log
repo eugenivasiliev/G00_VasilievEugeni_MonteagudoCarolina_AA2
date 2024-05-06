@@ -1,14 +1,7 @@
-﻿  Ash.cpp
-  Camera.cpp
-C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Ash.h(21,46): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
-C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Ash.h(21,46): error C2143: error de sintaxis: falta ',' delante de '&'
+﻿  Camera.cpp
   Game.cpp
-C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(23,29): warning C4244: '=': conversión de 'ULONGLONG' a 'long'; posible pérdida de datos
-C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(49,27): warning C4244: '=': conversión de 'ULONGLONG' a 'long'; posible pérdida de datos
+C:\Users\EugeniVasilievVovk\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(46,29): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
+C:\Users\EugeniVasilievVovk\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(74,27): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
   main.cpp
-C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Ash.h(21,46): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
-C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Ash.h(21,46): error C2143: error de sintaxis: falta ',' delante de '&'
-  Map.cpp
-C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Ash.h(21,46): error C4430: falta el especificador de tipo; se presupone int. Nota: C++ no admite default-int
-C:\Users\Eugeni\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Ash.h(21,46): error C2143: error de sintaxis: falta ',' delante de '&'
-  Generando código...
+  Generating Code...
+  PokeEnti.vcxproj -> C:\Users\EugeniVasilievVovk\Desktop\GitProjects\pokENTI\PokeEnti\x64\Debug\PokeEnti.exe

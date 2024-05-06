@@ -1,54 +1,53 @@
 #include "Ash.h"
 #include <iostream>
 
-std::pair<int, int> operator+ (const std::pair<int, int>& l, const std::pair<int, int>& r);
-void operator+= (std::pair<int, int>& l, const std::pair<int, int>& r);
+const char UP_SPRITE = '^';
+const char DOWN_SPRITE = 'v';
+const char LEFT_SPRITE = '<';
+const char RIGHT_SPRITE = '>';
 
-Player::Player() : m_position({ 0,0 }), m_orientation('>'), m_capturedPokemon(0) {}
-Player::Player(int x, int y) : m_position({ x, y }), m_orientation('>'), m_capturedPokemon(0) {}
+Player::Player() : m_position({ 0,0 }), m_orientation(RIGHT_SPRITE), m_capturedPokemon(0) {}
+Player::Player(int x, int y) : m_position({ y, x }), m_orientation(RIGHT_SPRITE), m_capturedPokemon(STARTING_POKEMON) {}
 
-int Player::getX() const {
-	return m_position.first;
+std::pair<int, int> Player::getPosition() const {
+	return m_position;
 }
 
-int Player::getY() const {
-	return m_position.second;
+char Player::getSprite() const {
+	return m_orientation;
 }
 
 int Player::getCapturedPokemon() const {
 	return m_capturedPokemon;
 }
 
-void Player::setPosition(std::pair<int, int> newPos) {
-	//Check first validity of input
-	m_position = newPos;
+void Player::incrementPokemon(bool captured) {
+	m_capturedPokemon += captured;
 }
 
 void Player::move(const short &direction, const Map &tiles) {
 	switch (direction) {
 	case VK_UP:
-		if (tiles(m_position + UP) == ' ')
+		if (tiles(m_position + UP) == EMPTY_TILE)
 			m_position += UP;
-		m_orientation = '^';
+		m_orientation = UP_SPRITE;
 		break;
 	case VK_LEFT:
-		if (tiles(m_position + LEFT) == ' ')
+		if (tiles(m_position + LEFT) == EMPTY_TILE)
 			m_position += LEFT;
-		m_orientation = '<';
+		m_orientation = LEFT_SPRITE;
 		break;
 	case VK_DOWN:
-		if (tiles(m_position + DOWN) == ' ')
+		if (tiles(m_position + DOWN) == EMPTY_TILE)
 			m_position += DOWN;
-		m_orientation = 'v';
+		m_orientation = DOWN_SPRITE;
 		break;
 	case VK_RIGHT:
-		if (tiles(m_position + RIGHT) == ' ')
+		if (tiles(m_position + RIGHT) == EMPTY_TILE)
 			m_position += RIGHT;
-		m_orientation = '>';
+		m_orientation = RIGHT_SPRITE;
 		break;
 	}
 }
 
-void Player::draw() {
-	std::cout << m_orientation;
-}
+Player::~Player() {}
