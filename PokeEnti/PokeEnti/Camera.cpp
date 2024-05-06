@@ -44,5 +44,3 @@ void Camera::move(const short &direction, const std::pair<int, int> &playerPosit
 		break;
 	}
 }
-
-Camera::~Camera(){}
