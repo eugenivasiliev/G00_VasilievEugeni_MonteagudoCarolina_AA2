@@ -1,7 +1,1 @@
-﻿  Camera.cpp
-  Game.cpp
-C:\Users\EugeniVasilievVovk\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(46,29): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
-C:\Users\EugeniVasilievVovk\Desktop\GitProjects\pokENTI\PokeEnti\PokeEnti\Game.cpp(74,27): warning C4244: '=': conversion from 'ULONGLONG' to 'long', possible loss of data
-  main.cpp
-  Generating Code...
-  PokeEnti.vcxproj -> C:\Users\EugeniVasilievVovk\Desktop\GitProjects\pokENTI\PokeEnti\x64\Debug\PokeEnti.exe
+﻿  PokeEnti.vcxproj -> C:\Users\EugeniVasilievVovk\Desktop\GitProjects\pokENTI\PokeEnti\x64\Debug\PokeEnti.exe

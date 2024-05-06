@@ -17,15 +17,13 @@ bool operator< (const std::pair<int, int>& l, const std::pair<int, int>& r);
 class Zone {
 public:
 	Zone();
-	Zone(int startPokemon, int condition, std::pair<int, int> position, int width, int height);
-	bool getUnlocked();
-	void checkCondition(int collectedPokemon);
-	int getStartPokemon();
+	Zone(const int &startPokemon, const int &condition);
+	bool getUnlocked() const;
+	void checkCondition(const int &collectedPokemon);
+	int getStartPokemon() const;
 private:
 	bool m_unlocked;
 	int m_startPokemon, m_condition;
-	std::pair<int, int> m_position;
-	int m_width, m_height;
 };
 
 class Map
@@ -38,14 +36,14 @@ public:
 	int getHeight() const;
 	bool checkPokemon(std::pair<int, int> position);
 	char operator() (const std::pair<int, int> &position) const;
-	char operator() (int x, int y) const;
+	char operator() (const int &x, const int &y) const;
 	~Map();
 
 private:
 	int m_width, m_height;
 	char** m_tiles;
 
-	std::pair<int, int> getRandomEmptyTile();
+	std::pair<int, int> getRandomEmptyTile() const;
 	void repositionPokemon(std::pair<int, int> position);
 
 	Zone m_palletTown, m_forest, m_celesteCave, m_pokENTILeague;

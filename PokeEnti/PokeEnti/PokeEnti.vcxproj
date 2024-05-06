@@ -127,7 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Ash.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -136,7 +136,7 @@
     <ClCompile Include="ReadDoc.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ash.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputManager.h" />

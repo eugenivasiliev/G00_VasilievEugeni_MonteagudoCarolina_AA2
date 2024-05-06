@@ -10,7 +10,7 @@ bool ReadDoc::readData(Data &data_) {
 	std::ifstream file(fileName);
 
 	if (!file.is_open()) {
-		std::cout << "ERROR in opening config.txt";
+		std::cout << "ERROR in opening config.txt" << std::endl;
 		return false;
 	}
 
@@ -40,9 +40,9 @@ bool ReadDoc::readData(Data &data_) {
 	return true;
 }
 
-bool ReadDoc::assertFormat(char divider) {
+bool ReadDoc::assertFormat(const char &divider) {
 	if (divider != DIVIDER) {
-		std::cout << "ERROR in config.txt format (wrong divider)";
+		std::cout << "ERROR in config.txt format (wrong divider)" << std::endl;
 		return false;
 	}
 	return true;

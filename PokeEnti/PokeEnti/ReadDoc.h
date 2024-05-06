@@ -13,7 +13,7 @@ class ReadDoc
 public:
 	ReadDoc(const std::string& fileName);
 	bool readData(Data &data_);
-	bool assertFormat(char divider);
+	bool assertFormat(const char &divider);
 	~ReadDoc();
 
 private:

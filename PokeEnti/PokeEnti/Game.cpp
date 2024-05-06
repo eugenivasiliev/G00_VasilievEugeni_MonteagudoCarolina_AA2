@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <Windows.h>
 #include <iostream>
+#include <ctime>
 
 const std::pair<int, int> UP = std::make_pair(-1, 0);
 const std::pair<int, int> DOWN = std::make_pair(1, 0);
@@ -19,31 +20,23 @@ void operator+= (std::pair<int, int>& l, const std::pair<int, int>& r) {
 	l = l + r;
 }
 
-Game::Game() :
-	m_mapWidth(0), m_mapHeight(0),
-	m_palletTownStartPokemon(0), m_palletTownCondition(0),
-	m_forestStartPokemon(0), m_forestCondition(0)
+Game::Game()
 {
 
 }
 
 Game::Game(const Data &data) :
-	m_mapWidth(data.m_mapWidth), m_mapHeight(data.m_mapHeight), 
-	m_palletTownStartPokemon(data.m_palletTownStartPokemon), m_palletTownCondition(data.m_palletTownCondition), 
-	m_forestStartPokemon(data.m_forestStartPokemon), m_forestCondition(data.m_forestCondition),
 	m_inputManager(InputManager()),
 	m_map(Map(data)),
 	m_camera(Camera(std::make_pair(0, 0), data.m_mapWidth / 2, data.m_mapHeight / 2, &m_map)),
 	m_player(data.m_mapWidth / 4, data.m_mapHeight / 4)
 	
 {
-	
+
 }
 
-bool Game::GameLoop() {
-
-	long frameStart, frameEnd;
-	frameStart = GetTickCount64();
+bool Game::gameLoop() {
+	clock_t time = clock();
 
 	//Process Input
 	m_inputManager.ProcessInput();
@@ -71,8 +64,9 @@ bool Game::GameLoop() {
 	std::cout << std::endl << "Pokemon captured: " << m_player.getCapturedPokemon();
 
 	//Frame control
-	frameEnd = GetTickCount64();
-	Sleep(1000 / FRAMERATE - (frameEnd - frameStart));
+	time = clock() - time;
+	int msLeft = 1000 / FRAMERATE - (int)((double)(time) / CLOCKS_PER_SEC * 1000);
+	if(msLeft > 0) Sleep(msLeft);
 	return true;
 }
 

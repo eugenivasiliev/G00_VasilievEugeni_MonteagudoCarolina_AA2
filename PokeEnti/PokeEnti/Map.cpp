@@ -17,25 +17,19 @@ Zone::Zone() {
 	m_unlocked = false;
 	m_startPokemon = 0;
 	m_condition = 0;
-	m_position = std::make_pair(0,0);
-	m_width = 0;
-	m_height = 0;
 }
 
-Zone::Zone(int startPokemon, int condition, std::pair<int, int> position, int width, int height) {
+Zone::Zone(const int &startPokemon, const int &condition) {
 	m_unlocked = false;
 	m_startPokemon = startPokemon;
 	m_condition = condition;
-	m_position = position;
-	m_width = width;
-	m_height = height;
 }
 
-bool Zone::getUnlocked() { return m_unlocked; }
+bool Zone::getUnlocked() const { return m_unlocked; }
 
-void Zone::checkCondition(int collectedPokemon) { m_unlocked = m_unlocked || (collectedPokemon >= m_condition); }
+void Zone::checkCondition(const int &collectedPokemon) { m_unlocked = m_unlocked || (collectedPokemon >= m_condition); }
 
-int Zone::getStartPokemon() { return m_startPokemon; }
+int Zone::getStartPokemon() const { return m_startPokemon; }
 
 
 
@@ -72,10 +66,10 @@ Map::Map(const Data& data) : m_width(data.m_mapWidth), m_height(data.m_mapHeight
 		m_tiles[m_height - 1][i] = WALL_TILE;
 	}
 
-	m_palletTown = Zone(data.m_palletTownStartPokemon, data.m_palletTownCondition, std::make_pair(0, 0), m_width / 2, m_height / 2);
-	m_forest = Zone(data.m_forestStartPokemon, data.m_forestCondition, std::make_pair(m_width / 2, 0), m_width / 2, m_height / 2);
-	m_celesteCave = Zone(0, 0, std::make_pair(m_width / 2, m_height / 2), m_width / 2, m_height / 2);
-	m_pokENTILeague = Zone(0, 0, std::make_pair(0, m_height / 2), m_width / 2, m_height / 2);
+	m_palletTown = Zone(data.m_palletTownStartPokemon, data.m_palletTownCondition);
+	m_forest = Zone(data.m_forestStartPokemon, data.m_forestCondition);
+	m_celesteCave = Zone(0, 0);
+	m_pokENTILeague = Zone(0, 0);
 
 	//Generate Pallet Town pokemon
 	for (int i = 0; i < m_palletTown.getStartPokemon(); ++i) {
@@ -124,7 +118,7 @@ char Map::operator() (const std::pair<int, int>& position) const {
 	return m_tiles[position.first][position.second];
 }
 
-char Map::operator() (int x, int y) const {
+char Map::operator() (const int &x, const int &y) const {
 	return m_tiles[x][y];
 }
 
@@ -136,7 +130,7 @@ int Map::getHeight() const {
 	return m_height;
 }
 
-std::pair<int, int> Map::getRandomEmptyTile() {
+std::pair<int, int> Map::getRandomEmptyTile() const {
 	int x, y;
 	do {
 		x = rand() % m_width;
