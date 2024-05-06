@@ -80,7 +80,6 @@ void Game::hideCursor() {
 
 Game::~Game(){
 	m_inputManager.~InputManager();
-	m_camera.~Camera();
 	m_player.~Player();
 	m_map.~Map();
 }
