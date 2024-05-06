@@ -78,4 +78,9 @@ void Game::hideCursor() {
 	SetConsoleCursorInfo(out, &cursorInfo);
 }
 
-Game::~Game(){}
+Game::~Game(){
+	m_inputManager.~InputManager();
+	m_camera.~Camera();
+	m_player.~Player();
+	m_map.~Map();
+}
