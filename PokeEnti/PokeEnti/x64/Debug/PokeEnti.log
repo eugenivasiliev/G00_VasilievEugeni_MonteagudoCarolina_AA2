@@ -1,0 +1,10 @@
+﻿  Player.cpp
+  Camera.cpp
+  Game.cpp
+  InputManager.cpp
+  main.cpp
+C:\Users\Carol\source\repos\PoKEnti\PokeEnti\PokeEnti\main.cpp(10,12): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+  Map.cpp
+  ReadDoc.cpp
+  Generando código...
+  PokeEnti.vcxproj -> C:\Users\Carol\source\repos\PoKEnti\PokeEnti\x64\Debug\PokeEnti.exe
