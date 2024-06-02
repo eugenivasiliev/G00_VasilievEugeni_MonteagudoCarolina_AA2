@@ -18,39 +18,73 @@ Game::Game(const Data &data) :
 
 }
 
-bool Game::gameLoop() {
+bool Game::init() {
+	std::cout << "Title Screen" << std::endl;
+	Sleep(3);
+}
 
+MenuOptions Game::mainMenu(const MenuOptions &currOption) {
 	clock_t time = clock();
 
-	//Process Input
+	assert((currOption == MenuOptions::NONE_EXIT || currOption == MenuOptions::NONE_PLAY) && "Invalid menu option");
+
+#pragma region INPUT
+
 	m_inputManager.ProcessInput();
 	short input = m_inputManager.GetCurrentInput();
 
-	if (input == VK_UP || input == VK_LEFT || input == VK_DOWN || input == VK_RIGHT) {
-		//Movement
+	if(VK_UP)
+
+	if (VK_UP <= input && input <= VK_DOWN) {
 		m_camera.move(input, m_player.getPosition());
 		m_player.move(input, m_map);
 	}
-	else if (input == VK_SPACE) {
-		//Interact
-		m_player.incrementPokemon(m_map.checkPokemon(m_player.getPosition()));
-	}
-	else if (input == VK_ESCAPE) {
-		//Quit
-		return false;
-	}
 
-	//Update
+#pragma endregion
+
+	std::cout << "\033[1;1H\033[0;0;0m";
+	std::cout << "Select option" << std::endl << std::endl;
+	std::cout << ((currOption == MenuOptions::NONE_PLAY) ? "\033[0;32;1m" : "\033[0;0;0m") << "Play" << std::endl;
+	std::cout << ((currOption == MenuOptions::NONE_PLAY) ? "\033[0;32;1m" : "\033[0;0;0m") << "Exit" << std::endl;
+
+	time = clock() - time;
+	int msLeft = 1000 / FRAMERATE - (int)((double)(time) / CLOCKS_PER_SEC * 1000);
+	if (msLeft > 0) Sleep(msLeft);
+}
+
+bool Game::gameLoop() {
+	clock_t time = clock();
+#pragma region INPUT
+
+	m_inputManager.ProcessInput();
+	short input = m_inputManager.GetCurrentInput();
+
+	if (VK_UP <= input && input <= VK_DOWN) {
+		m_camera.move(input, m_player.getPosition());
+		m_player.move(input, m_map);
+	}
+	else if (input == VK_SPACE) m_player.incrementPokemon(m_map.checkPokemon(m_player.getPosition()));
+	else if (input == VK_ESCAPE) return false;
+
+#pragma endregion
+#pragma region UPDATE
+
 	m_map.update(m_player.getPosition(), m_player.getSprite(), m_player.getCapturedPokemon());
 
-	//Render map
+#pragma endregion
+#pragma region RENDER
+
 	m_camera.draw();
 	std::cout << std::endl << "Pokemon captured: " << m_player.getCapturedPokemon();
 
-	//Frame control
+#pragma endregion
+#pragma region FRAME CONTROL
+
 	time = clock() - time;
 	int msLeft = 1000 / FRAMERATE - (int)((double)(time) / CLOCKS_PER_SEC * 1000);
 	if(msLeft > 0) Sleep(msLeft);
+
+#pragma endregion
 	return true;
 }
 

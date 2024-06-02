@@ -19,7 +19,7 @@ void operator+= (std::pair<int, int>& l, const short& r);
 bool operator< (const std::pair<int, int>& l, const std::pair<int, int>& r);
 #pragma endregion
 
-#pragma region Tiles
+#pragma region TILES
 
 #define MakeVariant(name, ...) \
 enum class name##_INDICES { \
@@ -27,18 +27,21 @@ enum class name##_INDICES { \
 }; \
 typedef std::variant<__VA_ARGS__> name;
 
-enum class EnvironmentTiles {
+//Environment tiles
+enum class EnvTiles { 
 	EMPTY_TILE,
 	WALL_TILE,
 	POKEMON_TILE
 };
 
-enum class PlayerTiles {
+//Player tiles
+enum class PlTiles {
 	LEFT_SPRITE,
 	UP_SPRITE,
 	RIGHT_SPRITE,
 	DOWN_SPRITE
 };
 
-MakeVariant(Tiles, EnvironmentTiles, PlayerTiles)
+MakeVariant(Tiles, EnvTiles, PlTiles)
+
 #pragma endregion

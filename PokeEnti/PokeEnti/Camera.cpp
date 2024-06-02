@@ -10,36 +10,36 @@ Camera::Camera(const std::pair<int, int>& position, const int& width, const int&
 
 void Camera::draw() {
 	//Render map
-	buffer << "\033[1;1H";
+	m_buffer << "\033[1;1H";
 	for (int i = m_position.first; i < m_height + m_position.first; ++i) {
 		for (int j = m_position.second; j < m_width + m_position.second; ++j) {
 			Tiles tile = (*m_map)(i, j);
 			switch (tile.index())
 			{
-			case static_cast<int>(Tiles_INDICES::EnvironmentTiles):
-				if(tile == (Tiles)EnvironmentTiles::EMPTY_TILE) buffer << "\033[0;0;0m ";
-				else if (tile == (Tiles)EnvironmentTiles::WALL_TILE) buffer << "\033[47m\033[1;37mX";
-				else if (tile == (Tiles)EnvironmentTiles::POKEMON_TILE) buffer << "\033[0;33mP";
+			case static_cast<int>(Tiles_INDICES::EnvTiles):
+				if(tile == (Tiles)EnvTiles::EMPTY_TILE) m_buffer << "\033[0;0;0m ";
+				else if (tile == (Tiles)EnvTiles::WALL_TILE) m_buffer << "\033[47m\033[1;37mX";
+				else if (tile == (Tiles)EnvTiles::POKEMON_TILE) m_buffer << "\033[0;33mP";
 				break;
-			case static_cast<int>(Tiles_INDICES::PlayerTiles):
-				buffer << "\033[0;32;1m";
-				if (tile == (Tiles)PlayerTiles::LEFT_SPRITE) buffer << "<";
-				else if (tile == (Tiles)PlayerTiles::UP_SPRITE) buffer << "^";
-				else if (tile == (Tiles)PlayerTiles::RIGHT_SPRITE) buffer << ">";
-				else if (tile == (Tiles)PlayerTiles::DOWN_SPRITE) buffer << "v";
+			case static_cast<int>(Tiles_INDICES::PlTiles):
+				m_buffer << "\033[0;32;1m";
+				if (tile == (Tiles)PlTiles::LEFT_SPRITE) m_buffer << "<";
+				else if (tile == (Tiles)PlTiles::UP_SPRITE) m_buffer << "^";
+				else if (tile == (Tiles)PlTiles::RIGHT_SPRITE) m_buffer << ">";
+				else if (tile == (Tiles)PlTiles::DOWN_SPRITE) m_buffer << "v";
 				break;
 			default:
 				assert(false && "Undrawable tile");
 				break;
 			}
-			buffer << "\033[0;0;0m";
+			m_buffer << "\033[0;0;0m";
 			
 		}
-		buffer << std::endl;
+		m_buffer << std::endl;
 	}
-	std::cout << buffer.str();
-	buffer.str("");
-	buffer.clear();
+	std::cout << m_buffer.str();
+	m_buffer.str("");
+	m_buffer.clear();
 }
 
 void Camera::move(const short &direction, const std::pair<int, int> &playerPosition) {

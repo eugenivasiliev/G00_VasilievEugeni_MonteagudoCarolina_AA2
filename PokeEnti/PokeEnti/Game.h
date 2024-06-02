@@ -7,10 +7,19 @@
 
 #define FRAMERATE 30
 
+enum class MenuOptions {
+	PLAY,
+	EXIT,
+	NONE_PLAY,
+	NONE_EXIT
+};
+
 class Game {
 public:
 	Game();
 	Game(const Data &data);
+	bool init();
+	MenuOptions mainMenu(const MenuOptions &currOption);
 	bool gameLoop();
 	void hideCursor();
 private:
