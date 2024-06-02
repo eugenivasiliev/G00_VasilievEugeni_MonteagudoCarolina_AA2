@@ -1,10 +1,6 @@
 #include "InputManager.h"
 #include <Windows.h>
-
-#define KEYCODE_D 0x44
-#define KEYCODE_F 0x46
-#define KEYCODE_J 0x4A
-#define KEYCODE_K 0x4B
+#include <iostream>
 
 InputManager::InputManager() { m_inputs = {}; }
 
@@ -20,10 +16,7 @@ void InputManager::ProcessInput() {
 	if (m_inputs.size() >= MAX_INPUTS_BUFFERED) return;
 
 	//Movement inputs
-	if (GetAsyncKeyState(KEYCODE_D) && (m_inputs.empty() || m_inputs.back() != KEYCODE_D)) m_inputs.push(KEYCODE_D);
-	if (GetAsyncKeyState(KEYCODE_F) && (m_inputs.empty() || m_inputs.back() != KEYCODE_F)) m_inputs.push(KEYCODE_F);
-	if (GetAsyncKeyState(KEYCODE_J) && (m_inputs.empty() || m_inputs.back() != KEYCODE_J)) m_inputs.push(KEYCODE_J);
-	if (GetAsyncKeyState(KEYCODE_K) && (m_inputs.empty() || m_inputs.back() != KEYCODE_K)) m_inputs.push(KEYCODE_K);
+	for(short i = VK_LEFT; i <= VK_DOWN; ++i) if (GetAsyncKeyState(i) && (m_inputs.empty() || m_inputs.back() != i)) m_inputs.push(i);
 
 	//Interaction
 	if (GetAsyncKeyState(VK_SPACE) && (m_inputs.empty() || m_inputs.back() != VK_SPACE)) m_inputs.push(VK_SPACE);
