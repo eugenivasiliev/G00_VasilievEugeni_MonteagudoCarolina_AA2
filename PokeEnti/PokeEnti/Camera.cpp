@@ -1,7 +1,6 @@
 #include "Camera.h"
 #include <iostream>
 
-
 Camera::Camera() : m_position(std::make_pair(0, 0)), m_width(0), m_height(0), m_map(nullptr) {}
 
 Camera::Camera(const std::pair<int, int>& position, const int& width, const int& height, Map* map) : 
@@ -14,10 +13,25 @@ void Camera::draw() {
 	buffer << "\033[1;1H";
 	for (int i = m_position.first; i < m_height + m_position.first; ++i) {
 		for (int j = m_position.second; j < m_width + m_position.second; ++j) {
-			if((*m_map)(i, j) == WALL_TILE) buffer << "\033[47m\033[1;37m";
-			else if((*m_map)(i, j) == POKEMON_TILE) buffer << "\033[0;33m";
-			else if((*m_map)(i, j) == UP_SPRITE || (*m_map)(i, j) == DOWN_SPRITE || (*m_map)(i, j) == LEFT_SPRITE || (*m_map)(i, j) == RIGHT_SPRITE) buffer << "\033[0;32;1m";
-			buffer << (*m_map)(i, j);
+			Tiles tile = (*m_map)(i, j);
+			switch (tile.index())
+			{
+			case static_cast<int>(Tiles_INDICES::EnvironmentTiles):
+				if(tile == (Tiles)EnvironmentTiles::EMPTY_TILE) buffer << "\033[0;0;0m ";
+				else if (tile == (Tiles)EnvironmentTiles::WALL_TILE) buffer << "\033[47m\033[1;37mX";
+				else if (tile == (Tiles)EnvironmentTiles::POKEMON_TILE) buffer << "\033[0;33mP";
+				break;
+			case static_cast<int>(Tiles_INDICES::PlayerTiles):
+				buffer << "\033[0;32;1m";
+				if (tile == (Tiles)PlayerTiles::LEFT_SPRITE) buffer << "<";
+				else if (tile == (Tiles)PlayerTiles::UP_SPRITE) buffer << "^";
+				else if (tile == (Tiles)PlayerTiles::RIGHT_SPRITE) buffer << ">";
+				else if (tile == (Tiles)PlayerTiles::DOWN_SPRITE) buffer << "v";
+				break;
+			default:
+				assert(false && "Undrawable tile");
+				break;
+			}
 			buffer << "\033[0;0;0m";
 			
 		}
