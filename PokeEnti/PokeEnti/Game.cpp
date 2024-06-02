@@ -3,23 +3,6 @@
 #include <iostream>
 #include <ctime>
 
-const std::pair<int, int> UP = std::make_pair(-1, 0);
-const std::pair<int, int> DOWN = std::make_pair(1, 0);
-const std::pair<int, int> LEFT = std::make_pair(0, -1);
-const std::pair<int, int> RIGHT = std::make_pair(0, 1);
-
-std::pair<int, int> operator+ (const std::pair<int, int>& l, const std::pair<int, int>& r) {
-	return std::make_pair(l.first + r.first, l.second + r.second);
-}
-
-bool operator< (const std::pair<int, int> &l, const std::pair<int, int> &r) {
-	return (l.first < r.first && l.second < r.second);
-}
-
-void operator+= (std::pair<int, int>& l, const std::pair<int, int>& r) {
-	l = l + r;
-}
-
 Game::Game()
 {
 
@@ -36,6 +19,7 @@ Game::Game(const Data &data) :
 }
 
 bool Game::gameLoop() {
+
 	clock_t time = clock();
 
 	//Process Input
