@@ -20,7 +20,7 @@ class Map
 public:
 	Map();
 	Map(const Data &data);
-	void update(const std::pair<int, int>& playerPosition, const PlayerTiles& playerSprite, const int& capturedPokemon);
+	void update(const std::pair<int, int>& playerPosition, const PlTiles& playerSprite, const int& capturedPokemon);
 	int getWidth() const;
 	int getHeight() const;
 	bool checkPokemon(std::pair<int, int> position);

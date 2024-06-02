@@ -34,19 +34,19 @@ Map::Map(const Data& data) : m_width(data.m_mapWidth), m_height(data.m_mapHeight
 	for (int i = 0; i < m_height; ++i) {
 		m_tiles[i] = new Tiles[m_width];
 		for (int j = 0; j < m_width; ++j)
-			m_tiles[i][j] = EnvironmentTiles::EMPTY_TILE;
+			m_tiles[i][j] = EnvTiles::EMPTY_TILE;
 	}
 
 	//Walls
 	for (int i = 0; i < m_width; ++i) {
-		m_tiles[i][0] = EnvironmentTiles::WALL_TILE;
-		m_tiles[i][m_width / 2] = EnvironmentTiles::WALL_TILE;
-		m_tiles[i][m_width - 1] = EnvironmentTiles::WALL_TILE;
+		m_tiles[i][0] = EnvTiles::WALL_TILE;
+		m_tiles[i][m_width / 2] = EnvTiles::WALL_TILE;
+		m_tiles[i][m_width - 1] = EnvTiles::WALL_TILE;
 	}
 	for (int i = 0; i < m_height; ++i) {
-		m_tiles[0][i] = EnvironmentTiles::WALL_TILE;
-		m_tiles[m_height / 2][i] = EnvironmentTiles::WALL_TILE;
-		m_tiles[m_height - 1][i] = EnvironmentTiles::WALL_TILE;
+		m_tiles[0][i] = EnvTiles::WALL_TILE;
+		m_tiles[m_height / 2][i] = EnvTiles::WALL_TILE;
+		m_tiles[m_height - 1][i] = EnvTiles::WALL_TILE;
 	}
 
 	m_palletTown = Zone(data.m_palletTownStartPokemon, data.m_palletTownCondition);
@@ -60,30 +60,30 @@ Map::Map(const Data& data) : m_width(data.m_mapWidth), m_height(data.m_mapHeight
 		do {
 			pokemonPosition = getRandomEmptyTile();
 		} while (!(pokemonPosition < std::make_pair(m_height / 2, m_width / 2)));
-		m_tiles[pokemonPosition.first][pokemonPosition.second] = EnvironmentTiles::POKEMON_TILE;
+		m_tiles[pokemonPosition.first][pokemonPosition.second] = EnvTiles::POKEMON_TILE;
 	}
 
 }
 
-void Map::update(const std::pair<int, int> &playerPosition, const PlayerTiles &playerSprite, const int& capturedPokemon) {
+void Map::update(const std::pair<int, int> &playerPosition, const PlTiles &playerSprite, const int& capturedPokemon) {
 	for (int i = 0; i < m_width; ++i)
 		for (int j = 0; j < m_height; ++j)
-			if (m_tiles[j][i].index() == static_cast<int>(Tiles_INDICES::PlayerTiles))
-				m_tiles[j][i] = EnvironmentTiles::EMPTY_TILE;
+			if (m_tiles[j][i].index() == static_cast<int>(Tiles_INDICES::PlTiles))
+				m_tiles[j][i] = EnvTiles::EMPTY_TILE;
 	m_tiles[playerPosition.first][playerPosition.second] = playerSprite;
 	if (!m_palletTown.getUnlocked()) {
 		m_palletTown.checkCondition(capturedPokemon);
 		if (m_palletTown.getUnlocked()) {
 			//Clear Pallet Town wall
 			for (int i = 1; i < m_height / 2; ++i)
-				m_tiles[i][m_width / 2] = EnvironmentTiles::EMPTY_TILE;
+				m_tiles[i][m_width / 2] = EnvTiles::EMPTY_TILE;
 			//Generate Forest pokemon
 			for (int i = 0; i < m_forest.getStartPokemon(); ++i) {
 				std::pair<int, int> pokemonPosition;
 				do {
 					pokemonPosition = getRandomEmptyTile();
 				} while (!(pokemonPosition < std::make_pair(m_height / 2, m_width) && std::make_pair(0, m_width / 2) < pokemonPosition));
-				m_tiles[pokemonPosition.first][pokemonPosition.second] = EnvironmentTiles::POKEMON_TILE;
+				m_tiles[pokemonPosition.first][pokemonPosition.second] = EnvTiles::POKEMON_TILE;
 			}
 		}
 	}
@@ -92,7 +92,7 @@ void Map::update(const std::pair<int, int> &playerPosition, const PlayerTiles &p
 		if (m_forest.getUnlocked())
 			//Clear Forest wall
 			for (int i = m_width / 2 + 1; i < m_width - 1; ++i)
-				m_tiles[m_height / 2][i] = EnvironmentTiles::EMPTY_TILE;
+				m_tiles[m_height / 2][i] = EnvTiles::EMPTY_TILE;
 		//Would generate next pokemon set, but it is not declared
 	}
 }
@@ -118,13 +118,13 @@ std::pair<int, int> Map::getRandomEmptyTile() const {
 	do {
 		x = rand() % m_width;
 		y = rand() % m_height;
-	} while ((*this)(y, x) != (Tiles)EnvironmentTiles::EMPTY_TILE);
+	} while ((*this)(y, x) != (Tiles)EnvTiles::EMPTY_TILE);
 	return std::make_pair(y, x);
 }
 
 bool Map::checkPokemon(std::pair<int, int> position) {
 	for (short i = VK_LEFT; i <= VK_DOWN; ++i)
-		if ((*this)(position + i) == (Tiles)EnvironmentTiles::POKEMON_TILE) {
+		if ((*this)(position + i) == (Tiles)EnvTiles::POKEMON_TILE) {
 			repositionPokemon(position + i);
 			return true;
 		}
@@ -132,9 +132,9 @@ bool Map::checkPokemon(std::pair<int, int> position) {
 }
 
 void Map::repositionPokemon(std::pair<int, int> position) {
-	m_tiles[position.first][position.second] = (Tiles)EnvironmentTiles::EMPTY_TILE;
+	m_tiles[position.first][position.second] = (Tiles)EnvTiles::EMPTY_TILE;
 	std::pair<int, int> newPokemonPosition = getRandomEmptyTile();
-	m_tiles[newPokemonPosition.first][newPokemonPosition.second] = (Tiles)EnvironmentTiles::POKEMON_TILE;
+	m_tiles[newPokemonPosition.first][newPokemonPosition.second] = (Tiles)EnvTiles::POKEMON_TILE;
 }
 
 Map::~Map() {
