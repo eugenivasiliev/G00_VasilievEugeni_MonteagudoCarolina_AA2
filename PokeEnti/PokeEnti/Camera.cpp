@@ -29,6 +29,9 @@ void Camera::draw(std::ostringstream& m_buffer) {
 			case static_cast<int>(Tiles_INDICES::PkTiles):
 				if (tile == (Tiles)PkTiles::POKEMON_TILE) m_buffer << "\033[0;33mP";
 				break;
+			case static_cast<int>(Tiles_INDICES::ObTiles):
+				if (tile == (Tiles)ObTiles::POKEBALL_TILE) m_buffer << "\033[31mO";
+				break;
 			default:
 				assert(false && "Undrawable tile");
 				break;

@@ -109,7 +109,7 @@ GameEnd Game::gameLoop() {
 	m_buffer << "\033[1;1H";
 	//cabezera
 	m_buffer << "\033[1;31mPokemons capturados:\033[1;32m[" << m_player.getCapturedPokemon() << "] ";
-	m_buffer << "\033[1;31mPokeballs:\033[1;32m[" << 10 << "]\033[0m\n";
+	m_buffer << "\033[1;31mPokeballs:\033[1;32m[" << m_player.getPokeballCount() << "]\033[0m\n";
 	//m_buffer << "       \033[1;32m[" << m_map.getZone() << "]\033[0m\n";
 	m_buffer << std::endl;
 	m_camera.draw(m_buffer);

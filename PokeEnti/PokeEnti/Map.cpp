@@ -1,5 +1,6 @@
 #include "Map.h"
 #include <iostream>
+#include <cstdlib>
 
 #pragma region ZONE
 Zone::Zone() {
@@ -71,6 +72,8 @@ Map::Map(const Data& data) : m_width(data.m_mapWidth), m_height(data.m_mapHeight
 		m_tiles[pokemonPosition.first][pokemonPosition.second] = PkTiles::POKEMON_TILE;
 	}
 
+	//colocar la primera pokeball en zona inicial
+	placePokeball(Zones::PALLET_TOWN);
 }
 
 void Map::update(const std::pair<int, int> &playerPosition, const PlTiles &playerSprite, const int& capturedPokemon) {
@@ -105,6 +108,12 @@ void Map::update(const std::pair<int, int> &playerPosition, const PlTiles &playe
 	}
 
 	movePokemons();
+
+	//recolectar pokeballs al pasar por encima
+	if (playerPosition == m_pokeballPosition) {
+		m_tiles[m_pokeballPosition.first][m_pokeballPosition.second] = EnvTiles::EMPTY_TILE;
+		placePokeball(getZone(playerPosition));
+	}
 }
 
 Zones Map::getZone(const std::pair<int, int>& position) const {
@@ -152,6 +161,11 @@ void Map::updatePokemonPosition(const std::pair<int, int>& oldPosition, const st
 	m_tiles[newPosition.first][newPosition.second] = PkTiles::POKEMON_TILE;
 }
 
+void Map::placePokeball(const Zones &zone) {
+	std::pair<int, int> newPokeballPos = getRandomEmptyTileInZone(zone);
+	m_pokeballPosition = newPokeballPos;
+	m_tiles[newPokeballPos.first][newPokeballPos.second] = ObTiles::POKEBALL_TILE;
+}
 
 Tiles Map::operator() (const std::pair<int, int>& position) const {
 	return m_tiles[position.first][position.second];

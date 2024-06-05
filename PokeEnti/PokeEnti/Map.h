@@ -44,6 +44,7 @@ public:
 	Tiles operator() (const int &x, const int &y) const;
 
 	void movePokemons();
+	void placePokeball(const Zones& zone);
 
 	~Map();
 
@@ -60,5 +61,8 @@ private:
 	void updatePokemonPosition(const std::pair<int, int>& oldPosition, const std::pair<int, int>& newPosition);
 	clock_t m_lastMoveTime;
 	int m_minTime, m_maxTime;
+
+	//pokeball
+	std::pair<int, int> m_pokeballPosition;
 	
 };

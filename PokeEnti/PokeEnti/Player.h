@@ -14,11 +14,14 @@ public:
 	std::pair<int, int> getPosition() const;
 	PlTiles getSprite() const;
 	int getCapturedPokemon() const;
-	void move(const short &direction, const Map &tiles);
+	int getPokeballCount() const;
+	void move(const short &direction, Map &tiles);
 	void incrementPokemon(const bool &captured);
+	void getPokeball();
 	~Player();
 private:
 	std::pair<int, int> m_position;
 	PlTiles m_orientation;
 	int m_capturedPokemon;
+	int m_pokeballCount;
 };
