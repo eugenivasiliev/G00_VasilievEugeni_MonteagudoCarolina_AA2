@@ -42,7 +42,7 @@ public:
 	Zones getZone(const std::pair<int, int>& position) const;
 	Tiles operator() (const std::pair<int, int> &position) const;
 	Tiles operator() (const int &x, const int &y) const;
-
+	void repositionPokemon(std::pair<int, int> position);
 	void movePokemons();
 	void placePokeball(const Zones& zone);
 
@@ -54,7 +54,6 @@ private:
 
 	std::pair<int, int> getRandomEmptyTile() const;
 	std::pair<int, int> getRandomEmptyTileInZone(const Zones& zone) const;
-	void repositionPokemon(std::pair<int, int> position);
 
 	Zone m_palletTown, m_forest, m_celesteCave, m_pokENTILeague;
 	//pokemon movement
