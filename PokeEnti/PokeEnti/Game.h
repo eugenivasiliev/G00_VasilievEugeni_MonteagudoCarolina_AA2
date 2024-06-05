@@ -45,7 +45,7 @@ public:
 	bool playGame();
 	void init();
 	MenuOptions mainMenu(const MenuOptions &currOption);
-	GameEnd gameLoop();
+	void gameLoop();
 	void gameOver();
 	void gameWin();
 	void hideCursor();
