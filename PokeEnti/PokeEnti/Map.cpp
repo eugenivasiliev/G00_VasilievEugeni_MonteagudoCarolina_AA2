@@ -219,13 +219,10 @@ std::pair<int, int> Map::getRandomEmptyTileInZone(const Zones& zone) const {
 	return pos;
 }
 
-bool Map::checkPokemon(std::pair<int, int> position) {
+std::pair<int, int> Map::checkPokemon(std::pair<int, int> position) {
 	for (short i = VK_LEFT; i <= VK_DOWN; ++i)
-		if ((*this)(position + i) == (Tiles)PkTiles::POKEMON_TILE) {
-			repositionPokemon(position + i);
-			return true;
-		}
-	return false;
+		if ((*this)(position + i).index() == static_cast<int>(Tiles_INDICES::PkTiles)) return position + i;
+	return EMPTY_PAIR;
 }
 
 void Map::repositionPokemon(std::pair<int, int> position) {
