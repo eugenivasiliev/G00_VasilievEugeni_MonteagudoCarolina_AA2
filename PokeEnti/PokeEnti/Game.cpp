@@ -107,6 +107,20 @@ GameEnd Game::gameLoop() {
 	m_buffer << "\033[1;1H";
 	m_buffer << "\033[1;31mPokemons capturados:\033[1;32m[" << m_player.getCapturedPokemon() << "] ";
 	m_buffer << "\033[1;31mPokeballs:\033[1;32m[" << m_player.getPokeballCount() << "]\033[0m\n";
+	switch (m_map.getZone(m_player.getPosition())) {
+	case Zones::PALLET_TOWN:
+		m_buffer << "\033[1;31mPokeballs:\033[1;32m[ Pallet Town ]\033[0m\n";
+		break;
+	case Zones::FOREST:
+		m_buffer << "\033[1;31mPokeballs:\033[1;32m[ Forest ]\033[0m\n";
+		break;
+	case Zones::CELESTE_CAVE:
+		m_buffer << "\033[1;31mPokeballs:\033[1;32m[ Celeste Cave ]\033[0m\n";
+		break;
+	case Zones::POKENTI_LEAGUE:
+		m_buffer << "\033[1;31mPokeballs:\033[1;32m[ PokEnti League ]\033[0m\n";
+		break;
+	}
 	m_buffer << std::endl;
 	m_camera.draw(m_buffer);
 	std::cout << m_buffer.str();
@@ -167,6 +181,20 @@ void Game::combat(std::pair<int, int> pokemonPosition) {
 		buffer << "\033[1;1H";
 		buffer << "\033[1;31mPokemons capturados:\033[1;32m[" << m_player.getCapturedPokemon() << "] ";
 		buffer << "\033[1;31mPokeballs:\033[1;32m[" << m_player.getPokeballCount() << "]\033[0m\n";
+		switch (m_map.getZone(m_player.getPosition())) {
+			case Zones::PALLET_TOWN:
+				buffer << "\033[1;31mPokeballs:\033[1;32m[ Pallet Town ]\033[0m\n";
+				break;
+			case Zones::FOREST:
+				buffer << "\033[1;31mPokeballs:\033[1;32m[ Forest ]\033[0m\n";
+				break;
+			case Zones::CELESTE_CAVE:
+				buffer << "\033[1;31mPokeballs:\033[1;32m[ Celeste Cave ]\033[0m\n";
+				break;
+			case Zones::POKENTI_LEAGUE:
+				buffer << "\033[1;31mPokeballs:\033[1;32m[ PokEnti League ]\033[0m\n";
+				break;
+		}
 		buffer << std::endl;
 		m_camera.draw(buffer);
 		buffer << std::endl;
