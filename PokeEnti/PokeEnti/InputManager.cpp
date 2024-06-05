@@ -11,6 +11,10 @@ short InputManager::GetCurrentInput() {
 	return currentInput;
 }
 
+void InputManager::ClearQueue() {
+	while (!m_inputs.empty()) m_inputs.pop();
+}
+
 void InputManager::ProcessInput() {
 	if (m_inputs.size() >= MAX_INPUTS_BUFFERED) return;
 
