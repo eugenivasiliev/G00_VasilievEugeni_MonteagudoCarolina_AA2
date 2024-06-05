@@ -238,7 +238,10 @@ void Game::combat(std::pair<int, int> pokemonPosition) {
 			break;
 		case CombatMenu::NONE_CAPTURE:
 			if(tile == (Tiles)PkTiles::POKEMON_TILE) m_map.repositionPokemon(isInCombat);
-			else if(tile == (Tiles)PkTiles::MEWTWO_TILE) m_hasMewtwo = true;
+			else if(tile == (Tiles)PkTiles::MEWTWO_TILE) {
+				m_hasMewtwo = true;
+				m_map(isInCombat) = EnvTiles::EMPTY_TILE;
+			}
 			m_player.incrementPokemon(1);
 			break;
 		case CombatMenu::NONE_FLEE:
