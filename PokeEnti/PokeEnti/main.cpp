@@ -16,6 +16,6 @@ int main() {
 
 	Game game(data);
 	game.hideCursor();
-	while (game.gameLoop());
+	while(game.playGame());
 	return 0;
 }
