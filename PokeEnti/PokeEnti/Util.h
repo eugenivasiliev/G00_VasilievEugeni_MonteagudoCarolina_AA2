@@ -30,8 +30,13 @@ typedef std::variant<__VA_ARGS__> name;
 //Environment tiles
 enum class EnvTiles { 
 	EMPTY_TILE,
-	WALL_TILE,
-	POKEMON_TILE
+	WALL_TILE
+};
+
+//Pokemon Tiles
+enum class PkTiles {
+	POKEMON_TILE,
+	MEWTWO_TILE
 };
 
 //Player tiles
@@ -42,6 +47,11 @@ enum class PlTiles {
 	DOWN_SPRITE
 };
 
-MakeVariant(Tiles, EnvTiles, PlTiles)
+//Object tiles
+enum class ObTiles {
+	POKEBALL_TILE
+};
+
+MakeVariant(Tiles, EnvTiles, PkTiles, PlTiles, ObTiles)
 
 #pragma endregion
