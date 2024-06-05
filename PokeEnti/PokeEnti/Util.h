@@ -4,7 +4,10 @@
 #include <utility>
 #include <variant>
 
+#define FRAMERATE 30
+
 #pragma region DIRECTIONS
+#define EMPTY_PAIR std::make_pair(-1, -1)
 #define UP std::make_pair(-1, 0)
 #define DOWN std::make_pair(1, 0)
 #define LEFT std::make_pair(0, -1)
