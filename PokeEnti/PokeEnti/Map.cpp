@@ -8,17 +8,19 @@ Zone::Zone() {
 	m_condition = 0;
 }
 
-Zone::Zone(const int &startPokemon, const int &condition) {
-	m_unlocked = false;
-	m_startPokemon = startPokemon;
-	m_condition = condition;
-}
+Zone::Zone(const Zones& zone, const std::pair<int, int>& lowerBound, const std::pair<int, int>& upperBound,
+	const int& startPokemon, const int& condition) : 
+	m_zone(zone), m_lowerBound(lowerBound), m_upperBound(upperBound),
+	m_unlocked(false), m_startPokemon(startPokemon), m_condition(condition) {}
 
 bool Zone::getUnlocked() const { return m_unlocked; }
 
 void Zone::checkCondition(const int &collectedPokemon) { m_unlocked = m_unlocked || (collectedPokemon >= m_condition); }
 
 int Zone::getStartPokemon() const { return m_startPokemon; }
+
+bool Zone::isInZone(const std::pair<int, int>& pos) const { return m_lowerBound < pos && pos < m_upperBound; }
+
 #pragma endregion
 
 #pragma region MAP
@@ -49,10 +51,16 @@ Map::Map(const Data& data) : m_width(data.m_mapWidth), m_height(data.m_mapHeight
 		m_tiles[m_height - 1][i] = EnvTiles::WALL_TILE;
 	}
 
-	m_palletTown = Zone(data.m_palletTownStartPokemon, data.m_palletTownCondition);
-	m_forest = Zone(data.m_forestStartPokemon, data.m_forestCondition);
-	m_celesteCave = Zone(0, 0);
-	m_pokENTILeague = Zone(0, 0);
+	m_palletTown = Zone(Zones::PALLET_TOWN, std::make_pair(0, 0), std::make_pair(m_height/2, m_width/2),
+		data.m_palletTownStartPokemon, data.m_palletTownCondition);
+	m_forest = Zone(Zones::FOREST, std::make_pair(0, m_width / 2), std::make_pair(m_height / 2, m_width),
+		data.m_forestStartPokemon, data.m_forestCondition);
+	m_celesteCave = Zone(Zones::CELESTE_CAVE, std::make_pair(m_height / 2, m_width / 2), 
+		std::make_pair(m_height, m_width),
+		0, 0);
+	m_pokENTILeague = Zone(Zones::POKENTI_LEAGUE, std::make_pair(m_height / 2, 0),
+		std::make_pair(m_height, m_width / 2),
+		0, 0);
 
 	//Generate Pallet Town pokemon
 	for (int i = 0; i < m_palletTown.getStartPokemon(); ++i) {
@@ -60,7 +68,7 @@ Map::Map(const Data& data) : m_width(data.m_mapWidth), m_height(data.m_mapHeight
 		do {
 			pokemonPosition = getRandomEmptyTile();
 		} while (!(pokemonPosition < std::make_pair(m_height / 2, m_width / 2)));
-		m_tiles[pokemonPosition.first][pokemonPosition.second] = EnvTiles::POKEMON_TILE;
+		m_tiles[pokemonPosition.first][pokemonPosition.second] = PkTiles::POKEMON_TILE;
 	}
 
 }
@@ -83,7 +91,7 @@ void Map::update(const std::pair<int, int> &playerPosition, const PlTiles &playe
 				do {
 					pokemonPosition = getRandomEmptyTile();
 				} while (!(pokemonPosition < std::make_pair(m_height / 2, m_width) && std::make_pair(0, m_width / 2) < pokemonPosition));
-				m_tiles[pokemonPosition.first][pokemonPosition.second] = EnvTiles::POKEMON_TILE;
+				m_tiles[pokemonPosition.first][pokemonPosition.second] = PkTiles::POKEMON_TILE;
 			}
 		}
 	}
@@ -95,6 +103,14 @@ void Map::update(const std::pair<int, int> &playerPosition, const PlTiles &playe
 				m_tiles[m_height / 2][i] = EnvTiles::EMPTY_TILE;
 		//Would generate next pokemon set, but it is not declared
 	}
+}
+
+Zones Map::getZone(const std::pair<int, int>& position) const {
+	if (m_palletTown.isInZone(position)) return Zones::PALLET_TOWN;
+	else if (m_forest.isInZone(position)) return Zones::FOREST;
+	else if (m_celesteCave.isInZone(position)) return Zones::CELESTE_CAVE;
+	else if (m_pokENTILeague.isInZone(position)) return Zones::POKENTI_LEAGUE;
+	else return Zones::NONE;
 }
 
 Tiles Map::operator() (const std::pair<int, int>& position) const {
@@ -122,9 +138,36 @@ std::pair<int, int> Map::getRandomEmptyTile() const {
 	return std::make_pair(y, x);
 }
 
+std::pair<int, int> Map::getRandomEmptyTileInZone(const Zones& zone) const {
+	Zone zoneToFind = m_palletTown;
+	assert(zone != Zones::NONE && "Invalid zone");
+	switch (zone)
+	{
+	case Zones::PALLET_TOWN:
+		zoneToFind = m_palletTown;
+		break;
+	case Zones::FOREST:
+		zoneToFind = m_forest;
+		break;
+	case Zones::CELESTE_CAVE:
+		zoneToFind = m_celesteCave;
+		break;
+	case Zones::POKENTI_LEAGUE:
+		zoneToFind = m_pokENTILeague;
+		break;
+	default:
+		break;
+	}
+	std::pair<int, int> pos;
+	do {
+		pos = getRandomEmptyTile();
+	} while (!zoneToFind.isInZone(pos));
+	return pos;
+}
+
 bool Map::checkPokemon(std::pair<int, int> position) {
 	for (short i = VK_LEFT; i <= VK_DOWN; ++i)
-		if ((*this)(position + i) == (Tiles)EnvTiles::POKEMON_TILE) {
+		if ((*this)(position + i) == (Tiles)PkTiles::POKEMON_TILE) {
 			repositionPokemon(position + i);
 			return true;
 		}
@@ -133,8 +176,8 @@ bool Map::checkPokemon(std::pair<int, int> position) {
 
 void Map::repositionPokemon(std::pair<int, int> position) {
 	m_tiles[position.first][position.second] = (Tiles)EnvTiles::EMPTY_TILE;
-	std::pair<int, int> newPokemonPosition = getRandomEmptyTile();
-	m_tiles[newPokemonPosition.first][newPokemonPosition.second] = (Tiles)EnvTiles::POKEMON_TILE;
+	std::pair<int, int> newPokemonPosition = getRandomEmptyTileInZone(getZone(position));
+	m_tiles[newPokemonPosition.first][newPokemonPosition.second] = (Tiles)PkTiles::POKEMON_TILE;
 }
 
 Map::~Map() {
