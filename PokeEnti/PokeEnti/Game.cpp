@@ -97,7 +97,7 @@ GameEnd Game::gameLoop() {
 		m_camera.move(input, m_player.getPosition());
 		m_player.move(input, m_map);
 	}
-	else if (input == VK_SPACE) m_player.incrementPokemon(m_map.checkPokemon(m_player.getPosition()));
+	else if (input == VK_SPACE) isInCombat = m_map.checkPokemon(m_player.getPosition());
 	else if (input == VK_ESCAPE) return GameEnd::ESCAPE;
 
 #pragma endregion
