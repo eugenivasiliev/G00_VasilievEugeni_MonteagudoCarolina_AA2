@@ -164,12 +164,13 @@ void Game::combat(std::pair<int, int> pokemonPosition) {
 	while (inCombat) {
 		buffer.str("");
 		buffer.clear();
+		buffer << "\033[1;1H";
 		buffer << "\033[1;31mPokemons capturados:\033[1;32m[" << m_player.getCapturedPokemon() << "] ";
 		buffer << "\033[1;31mPokeballs:\033[1;32m[" << m_player.getPokeballCount() << "]\033[0m\n";
 		buffer << std::endl;
-		camera.draw(m_buffer);
+		m_camera.draw(buffer);
 		buffer << std::endl;
-		buffer << "\033[0;0;0m" << name << ' ' << health << ' ' << numPokeballs << std::endl;
+		buffer << "\033[0;0;0m" << name << ' ' << health << ' ' << m_player.getPokeballCount() << std::endl;
 		option = combatMenu(option, buffer);
 		std::cout << buffer.str();
 		switch (option) {
