@@ -9,6 +9,8 @@ Game::Game()
 }
 
 Game::Game(const Data &data) :
+	isInCombat(EMPTY_PAIR),
+	m_pokemonHealth(30), m_mewtwoHealth(50), m_attackDamage(10),
 	m_state(GameState::INIT),
 	m_inputManager(InputManager()),
 	m_map(Map(data)),
@@ -105,17 +107,21 @@ GameEnd Game::gameLoop() {
 
 #pragma endregion
 #pragma region RENDER
-	//Render map
+	m_buffer.str("");
+	m_buffer.clear();
 	m_buffer << "\033[1;1H";
-	//cabezera
 	m_buffer << "\033[1;31mPokemons capturados:\033[1;32m[" << m_player.getCapturedPokemon() << "] ";
 	m_buffer << "\033[1;31mPokeballs:\033[1;32m[" << m_player.getPokeballCount() << "]\033[0m\n";
-	//m_buffer << "       \033[1;32m[" << m_map.getZone() << "]\033[0m\n";
 	m_buffer << std::endl;
 	m_camera.draw(m_buffer);
 	std::cout << m_buffer.str();
-	m_buffer.str("");
-	m_buffer.clear();
+	if (isInCombat != EMPTY_PAIR) {
+		m_inputManager.ClearQueue();
+		combat(isInCombat);
+		m_map.repositionPokemon(isInCombat);
+		isInCombat = EMPTY_PAIR;
+		system("cls");
+	}
 	
 
 #pragma endregion
@@ -137,6 +143,89 @@ void Game::gameOver() {
 void Game::gameWin() {
 	std::cout << "You Win";
 	Sleep(5000);
+}
+
+void Game::combat(std::pair<int, int> pokemonPosition) {
+	std::ostringstream buffer;
+	int numPokeballs = 10;
+	std::cout << "\033[s";
+	std::string name;
+	int health;
+	Tiles tile = m_map(pokemonPosition);
+	if (tile == (Tiles)PkTiles::POKEMON_TILE) {
+		name = "Random name";
+		health = m_pokemonHealth;
+	}
+	else if (tile == (Tiles)PkTiles::MEWTWO_TILE) {
+		name = "Mewtwo";
+		health = m_mewtwoHealth;
+	}
+	CombatMenu option = CombatMenu::NONE_ATTACK;
+	bool inCombat = true;
+	while (inCombat) {
+		buffer.str("");
+		buffer.clear();
+		buffer << "\033[u\033[0;0;0m" << name << ' ' << health << ' ' << numPokeballs << std::endl;
+		option = combatMenu(option, buffer);
+		std::cout << buffer.str();
+		switch (option) {
+		case CombatMenu::ATTACK:
+			health -= m_attackDamage;
+			inCombat = health > 0;
+			option = CombatMenu::NONE_ATTACK;
+			break;
+		case CombatMenu::CAPTURE:
+			if (numPokeballs > 0) {
+				numPokeballs--;
+				if (tile == (Tiles)PkTiles::POKEMON_TILE)
+					inCombat = rand() % (m_pokemonHealth * 7 / 6) <= health;
+				else if (tile == (Tiles)PkTiles::MEWTWO_TILE)
+					inCombat = rand() % (m_mewtwoHealth * 7 / 6) <= health;
+			}
+			option = CombatMenu::NONE_CAPTURE;
+			break;
+		case CombatMenu::FLEE:
+			inCombat = false;
+			option = CombatMenu::NONE_FLEE;
+			break;
+		}
+	}
+}
+
+CombatMenu Game::combatMenu(const CombatMenu& currOption, std::ostringstream& buffer) {
+	clock_t time = clock();
+
+	//assert(static_cast<int>(currOption) < static_cast<int>(CombatMenu::COUNT) &&
+		//"Invalid combat menu option");
+
+	CombatMenu option = currOption;
+
+#pragma region INPUT
+
+	m_inputManager.ProcessInput();
+	short input = m_inputManager.GetCurrentInput();
+
+	if (input == VK_UP) option = static_cast<CombatMenu>(max(static_cast<int>(option) - 1, 0));
+	if (input == VK_DOWN)
+		option = static_cast<CombatMenu>(
+			min(static_cast<int>(option) + 1,
+				static_cast<int>(CombatMenu::COUNT) - 1));
+	if (input == VK_SPACE) {
+		option = static_cast<CombatMenu>(static_cast<int>(option) + static_cast<int>(CombatMenu::COUNT) + 1);
+	}
+
+#pragma endregion
+
+	buffer << "\033[0;0;0mSelect option" << std::endl << std::endl;
+	buffer << ((option == CombatMenu::NONE_ATTACK) ? "\033[0;32;1m" : "\033[0;0;0m") << "Attack" << std::endl;
+	buffer << ((option == CombatMenu::NONE_CAPTURE) ? "\033[0;32;1m" : "\033[0;0;0m") << "Capture" << std::endl;
+	buffer << ((option == CombatMenu::NONE_FLEE) ? "\033[0;32;1m" : "\033[0;0;0m") << "Flee" << std::endl;
+
+	time = clock() - time;
+	int msLeft = 1000 / FRAMERATE - (int)((double)(time) / CLOCKS_PER_SEC * 1000);
+	if (msLeft > 0) Sleep(msLeft);
+
+	return option;
 }
 
 void Game::hideCursor() {
