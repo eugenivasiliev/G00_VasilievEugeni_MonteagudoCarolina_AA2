@@ -16,7 +16,8 @@ bool ReadDoc::readData(Data &data_) {
 
 	int mapWidth, mapHeight,
 		palletTownStartPokemon, palletTownCondition,
-		forestStartPokemon, forestCondition;
+		forestStartPokemon, forestCondition, powerPikachu, 
+		pokemonHealth, mewtwoHealth, minTime, maxTime;
 
 	char divider = DIVIDER;
 	file >> mapWidth >> divider;
@@ -29,13 +30,25 @@ bool ReadDoc::readData(Data &data_) {
 	if (!assertFormat(divider)) return false;
 	file >> forestStartPokemon >> divider;
 	if (!assertFormat(divider)) return false;
-	file >> forestCondition;
+	file >> forestCondition >> divider;
+	if (!assertFormat(divider)) return false;
+	file >> powerPikachu >> divider;
+	if (!assertFormat(divider)) return false;
+	file >> pokemonHealth >> divider;
+	if (!assertFormat(divider)) return false;
+	file >> mewtwoHealth >> divider;
+	if (!assertFormat(divider)) return false;
+	file >> minTime >> divider;
+	if (!assertFormat(divider)) return false;
+	file >> maxTime >> divider;
+
 
 	file.close();
 
 	data_ = { mapWidth, mapHeight, 
 		palletTownStartPokemon, palletTownCondition, 
-		forestStartPokemon, forestCondition };
+		forestStartPokemon, forestCondition , powerPikachu, 
+		pokemonHealth, mewtwoHealth, minTime, maxTime };
 
 	return true;
 }

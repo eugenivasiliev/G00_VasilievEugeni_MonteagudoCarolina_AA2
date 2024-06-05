@@ -21,6 +21,7 @@ Game::Game(const Data &data) :
 bool Game::init() {
 	std::cout << "Title Screen" << std::endl;
 	Sleep(3);
+	return true;
 }
 
 MenuOptions Game::mainMenu(const MenuOptions &currOption) {
@@ -50,6 +51,8 @@ MenuOptions Game::mainMenu(const MenuOptions &currOption) {
 	time = clock() - time;
 	int msLeft = 1000 / FRAMERATE - (int)((double)(time) / CLOCKS_PER_SEC * 1000);
 	if (msLeft > 0) Sleep(msLeft);
+
+	return currOption;
 }
 
 bool Game::gameLoop() {
