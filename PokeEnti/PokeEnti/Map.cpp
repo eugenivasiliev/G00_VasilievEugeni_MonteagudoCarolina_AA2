@@ -30,7 +30,7 @@ Map::Map() {
 	m_tiles = new Tiles* [m_width];
 }
 
-Map::Map(const Data& data) : m_width(data.m_mapWidth), m_height(data.m_mapHeight) {
+Map::Map(const Data& data) : m_width(data.m_mapWidth), m_height(data.m_mapHeight), m_minTime(data.m_minTime), m_maxTime(data.m_maxTime), m_lastMoveTime(clock()) {
 	//Initialise
 	m_tiles = new Tiles* [m_height];
 	for (int i = 0; i < m_height; ++i) {
@@ -103,6 +103,8 @@ void Map::update(const std::pair<int, int> &playerPosition, const PlTiles &playe
 				m_tiles[m_height / 2][i] = EnvTiles::EMPTY_TILE;
 		//Would generate next pokemon set, but it is not declared
 	}
+
+	movePokemons();
 }
 
 Zones Map::getZone(const std::pair<int, int>& position) const {
@@ -112,6 +114,44 @@ Zones Map::getZone(const std::pair<int, int>& position) const {
 	else if (m_pokENTILeague.isInZone(position)) return Zones::POKENTI_LEAGUE;
 	else return Zones::NONE;
 }
+
+void Map::movePokemons() {
+	if (((clock() - m_lastMoveTime) / CLOCKS_PER_SEC) < (rand() % (m_maxTime - m_minTime + 1) + m_minTime)) {
+		return;
+	}
+	m_lastMoveTime = clock();
+
+	for (int i = 0; i < m_height; ++i) {
+		for (int j = 0; j < m_width; ++j) {
+			if (m_tiles[i][j].index() == static_cast<int>(Tiles_INDICES::PkTiles)) {
+				std::pair<int, int> oldPos = std::make_pair(i, j);
+				std::pair<int, int> newPos;
+				bool validMove = false;
+				while (!validMove) {
+					int direction = rand() % 8;
+					switch (direction) {
+					case 0: newPos = oldPos + UP; break;
+					case 1: newPos = oldPos + DOWN; break;
+					case 2: newPos = oldPos + LEFT; break;
+					case 3: newPos = oldPos + RIGHT; break;
+					case 4: newPos = oldPos + UP + LEFT; break;
+					case 5: newPos = oldPos + UP + RIGHT; break;
+					case 6: newPos = oldPos + DOWN + LEFT; break;
+					case 7: newPos = oldPos + DOWN + RIGHT; break;
+					}
+					validMove = (*this)(newPos) == (Tiles)EnvTiles::EMPTY_TILE && getZone(newPos) == getZone(oldPos);
+				}
+				updatePokemonPosition(oldPos, newPos);
+			}
+		}
+	}
+}
+
+void Map::updatePokemonPosition(const std::pair<int, int>& oldPosition, const std::pair<int, int>& newPosition) {
+	m_tiles[oldPosition.first][oldPosition.second] = EnvTiles::EMPTY_TILE;
+	m_tiles[newPosition.first][newPosition.second] = PkTiles::POKEMON_TILE;
+}
+
 
 Tiles Map::operator() (const std::pair<int, int>& position) const {
 	return m_tiles[position.first][position.second];

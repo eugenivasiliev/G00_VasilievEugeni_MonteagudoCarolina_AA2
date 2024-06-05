@@ -2,6 +2,7 @@
 #include "ReadDoc.h"
 #include "Util.h"
 #include <utility>
+#include <time.h>
 
 enum class Zones {
 	PALLET_TOWN,
@@ -20,11 +21,13 @@ public:
 	bool getUnlocked() const;
 	void checkCondition(const int &collectedPokemon);
 	int getStartPokemon() const;
+	
 private:
 	Zones m_zone;
 	std::pair<int, int> m_lowerBound, m_upperBound;
 	bool m_unlocked;
 	int m_startPokemon, m_condition;
+	
 };
 
 class Map
@@ -39,6 +42,9 @@ public:
 	Zones getZone(const std::pair<int, int>& position) const;
 	Tiles operator() (const std::pair<int, int> &position) const;
 	Tiles operator() (const int &x, const int &y) const;
+
+	void movePokemons();
+
 	~Map();
 
 private:
@@ -50,4 +56,9 @@ private:
 	void repositionPokemon(std::pair<int, int> position);
 
 	Zone m_palletTown, m_forest, m_celesteCave, m_pokENTILeague;
+	//pokemon movement
+	void updatePokemonPosition(const std::pair<int, int>& oldPosition, const std::pair<int, int>& newPosition);
+	clock_t m_lastMoveTime;
+	int m_minTime, m_maxTime;
+	
 };
