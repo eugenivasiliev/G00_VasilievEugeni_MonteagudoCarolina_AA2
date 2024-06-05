@@ -39,7 +39,6 @@ bool Game::playGame() {
 		break;
 	case GameState::GAME:
 		while (m_state == GameState::GAME) gameLoop();
-		else return false;
 		break;
 	case GameState::GAME_OVER:
 		gameOver();
@@ -139,7 +138,7 @@ void Game::gameLoop() {
 #pragma region UPDATE
 
 	m_map.update(m_player.getPosition(), m_player.getSprite(), m_player.getCapturedPokemon());
-	if(m_map.getZone(m_player.getPosition() == Zones::POKENTI_LEAGUE) {
+	if(m_map.getZone(m_player.getPosition()) == Zones::POKENTI_LEAGUE) {
 		if(!m_canWin) m_state = GameState::GAME_OVER;
 		if(m_hasMewtwo) m_state = GameState::GAME_WIN;
 	}
