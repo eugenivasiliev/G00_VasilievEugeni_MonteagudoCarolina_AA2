@@ -52,7 +52,7 @@ public:
 	void combat(std::pair<int, int> pokemonPosition);
 	CombatMenu combatMenu(const CombatMenu& currOption, std::ostringstream& buffer);
 private:
-	bool m_canWin;
+	bool m_canWin, m_hasMewtwo;
 	std::ostringstream m_buffer;
 	int m_pokemonHealth, m_mewtwoHealth, m_attackDamage;
 	std::pair<int, int> isInCombat;
