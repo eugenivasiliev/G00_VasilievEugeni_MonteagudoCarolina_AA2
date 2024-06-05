@@ -38,7 +38,7 @@ public:
 	void update(const std::pair<int, int>& playerPosition, const PlTiles& playerSprite, const int& capturedPokemon);
 	int getWidth() const;
 	int getHeight() const;
-	bool checkPokemon(std::pair<int, int> position);
+	std::pair<int, int> checkPokemon(std::pair<int, int> position);
 	Zones getZone(const std::pair<int, int>& position) const;
 	Tiles operator() (const std::pair<int, int> &position) const;
 	Tiles operator() (const int &x, const int &y) const;
