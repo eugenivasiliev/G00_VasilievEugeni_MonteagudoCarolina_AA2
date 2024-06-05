@@ -1,4 +1,4 @@
-C#pragma once
+#pragma once
 #include "Player.h"
 #include "Map.h"
 #include "ReadDoc.h"
