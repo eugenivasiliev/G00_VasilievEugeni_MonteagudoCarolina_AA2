@@ -138,7 +138,7 @@ void Map::movePokemons() {
 
 	for (int i = 0; i < m_height; ++i) {
 		for (int j = 0; j < m_width; ++j) {
-			if (m_tiles[i][j].index() == static_cast<int>(Tiles_INDICES::PkTiles)) {
+			if (m_tiles[i][j] == (Tiles)PkTiles::POKEMON_TILE)) {
 				std::pair<int, int> oldPos = std::make_pair(i, j);
 				std::pair<int, int> newPos;
 				bool validMove = false;
