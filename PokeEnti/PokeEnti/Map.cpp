@@ -78,7 +78,8 @@ Map::Map(const Data& data) : m_width(data.m_mapWidth), m_height(data.m_mapHeight
 
 	//colocar la primera pokeball en zona inicial
 	placePokeball(Zones::PALLET_TOWN);
-	(*this)(m_height * 3 / 4, m_width * 3 / 4) = PkTiles::MEWTWO_TILE;
+	placePokeball(Zones::FOREST);
+	m_tiles[(m_height * 3) / 4][(m_width * 3) / 4] = PkTiles::MEWTWO_TILE;
 }
 
 void Map::update(const std::pair<int, int> &playerPosition, const PlTiles &playerSprite, const int& capturedPokemon) {
