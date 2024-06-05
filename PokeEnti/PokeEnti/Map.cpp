@@ -43,7 +43,8 @@ Map::Map(const Data& data) : m_width(data.m_mapWidth), m_height(data.m_mapHeight
 	//Walls
 	for (int i = 0; i < m_width; ++i) {
 		m_tiles[i][0] = EnvTiles::WALL_TILE;
-		m_tiles[i][m_width / 2] = EnvTiles::WALL_TILE;
+		//m_tiles[i][m_width / 2] = EnvTiles::WALL_TILE;
+		//Keep pokENTI unlocked, since it has no condition
 		m_tiles[i][m_width - 1] = EnvTiles::WALL_TILE;
 	}
 	for (int i = 0; i < m_height; ++i) {
