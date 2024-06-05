@@ -8,9 +8,8 @@ Camera::Camera(const std::pair<int, int>& position, const int& width, const int&
 	m_width(width), m_height(height), 
 	m_map(map) {}
 
-void Camera::draw() {
+void Camera::draw(std::ostringstream& m_buffer) {
 	//Render map
-	m_buffer << "\033[1;1H";
 	for (int i = m_position.first; i < m_height + m_position.first; ++i) {
 		for (int j = m_position.second; j < m_width + m_position.second; ++j) {
 			Tiles tile = (*m_map)(i, j);

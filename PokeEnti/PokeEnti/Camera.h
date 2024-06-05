@@ -14,7 +14,6 @@ public:
 	void move(const short &direction, const std::pair<int, int>& playerPosition);
 
 private:
-	std::ostringstream m_buffer;
 	std::pair<int, int> m_position;
 	int m_width, m_height;
 	Map* m_map;
