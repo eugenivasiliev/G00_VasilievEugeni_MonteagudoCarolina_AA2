@@ -5,7 +5,15 @@
 #include "InputManager.h"
 #include "Camera.h"
 
-#define FRAMERATE 30
+enum class CombatMenu {
+	NONE_ATTACK,
+	NONE_CAPTURE,
+	NONE_FLEE,
+	COUNT,
+	ATTACK,
+	CAPTURE,
+	FLEE
+};
 
 enum class GameEnd {
 	CONTINUE,
@@ -40,8 +48,12 @@ public:
 	void gameOver();
 	void gameWin();
 	void hideCursor();
+	void combat(std::pair<int, int> pokemonPosition);
+	CombatMenu combatMenu(const CombatMenu& currOption, std::ostringstream& buffer);
 private:
 	std::ostringstream m_buffer;
+	int m_pokemonHealth, m_mewtwoHealth, m_attackDamage;
+	std::pair<int, int> isInCombat;
 	GameState m_state;
 	InputManager m_inputManager;
 	Map m_map;
