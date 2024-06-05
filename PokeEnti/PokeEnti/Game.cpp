@@ -31,13 +31,12 @@ bool Game::playGame() {
 		break;
 	case GameState::MAIN_MENU:
 		while(option != MenuOptions::EXIT && option != MenuOptions::PLAY) option = mainMenu(option);
-		if (option == MenuOptions::EXIT) return false;
+		if (option == MenuOptions::EXIT) m_state = GameState::ESCAPE;
 		else m_state = GameState::GAME;
+		system("cls");
 		break;
 	case GameState::GAME:
-		while (end == GameEnd::CONTINUE) end = gameLoop();
-		if (end == GameEnd::WIN) m_state = GameState::GAME_WIN;
-		else if (end == GameEnd::LOSE) m_state = GameState::GAME_OVER;
+		while (m_state == GameState::GAME) gameLoop();
 		else return false;
 		break;
 	case GameState::GAME_OVER:
@@ -47,6 +46,8 @@ bool Game::playGame() {
 		gameWin();
 		m_state = GameState::INIT;
 		break;
+	case GameState::ESCAPE:
+		return false;
 	}
 	return true;
 }
@@ -86,7 +87,7 @@ MenuOptions Game::mainMenu(const MenuOptions &currOption) {
 	return option;
 }
 
-GameEnd Game::gameLoop() {
+void Game::gameLoop() {
 	clock_t time = clock();
 #pragma region INPUT
 
@@ -98,7 +99,7 @@ GameEnd Game::gameLoop() {
 		m_player.move(input, m_map);
 	}
 	else if (input == VK_SPACE) isInCombat = m_map.checkPokemon(m_player.getPosition());
-	else if (input == VK_ESCAPE) return GameEnd::ESCAPE;
+	else if (input == VK_ESCAPE) m_state = GameState::ESCAPE;
 
 #pragma endregion
 #pragma region RENDER
@@ -225,7 +226,8 @@ void Game::combat(std::pair<int, int> pokemonPosition) {
 	}
 	switch(option) {
 		case CombatMenu::NONE_ATTACK:
-			m_map.repositionPokemon(isInCombat);
+			if(tile == (Tiles)PkTiles::POKEMON_TILE) m_map.repositionPokemon(isInCombat);
+			else if(tile == (Tiles)PkTiles::MEWTWO_TILE) m_state = GameState::GAME_OVER;
 			break;
 		case CombatMenu::NONE_CAPTURE:
 			m_map.repositionPokemon(isInCombat);
