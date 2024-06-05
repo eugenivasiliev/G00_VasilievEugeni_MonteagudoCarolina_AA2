@@ -10,7 +10,7 @@ Game::Game()
 
 Game::Game(const Data &data) :
 	isInCombat(EMPTY_PAIR),
-	m_pokemonHealth(30), m_mewtwoHealth(50), m_attackDamage(10),
+	m_pokemonHealth(data.m_pokemonHealth), m_mewtwoHealth(data.m_mewtwoHealth), m_attackDamage(data.m_powerPikachu),
 	m_state(GameState::INIT),
 	m_inputManager(InputManager()),
 	m_map(Map(data)),
@@ -101,11 +101,6 @@ GameEnd Game::gameLoop() {
 	else if (input == VK_ESCAPE) return GameEnd::ESCAPE;
 
 #pragma endregion
-#pragma region UPDATE
-
-	m_map.update(m_player.getPosition(), m_player.getSprite(), m_player.getCapturedPokemon());
-
-#pragma endregion
 #pragma region RENDER
 	m_buffer.str("");
 	m_buffer.clear();
@@ -116,7 +111,7 @@ GameEnd Game::gameLoop() {
 	m_camera.draw(m_buffer);
 	std::cout << m_buffer.str();
 	if (isInCombat != EMPTY_PAIR) {
-		m_inputManager.ClearQueue();
+		//m_inputManager.ClearQueue();
 		combat(isInCombat);
 		m_map.repositionPokemon(isInCombat);
 		isInCombat = EMPTY_PAIR;
@@ -125,6 +120,13 @@ GameEnd Game::gameLoop() {
 	
 
 #pragma endregion
+#pragma region UPDATE
+
+	m_map.update(m_player.getPosition(), m_player.getSprite(), m_player.getCapturedPokemon());
+
+#pragma endregion
+
+
 #pragma region FRAME CONTROL
 
 	time = clock() - time;
