@@ -6,6 +6,7 @@ class InputManager {
 public:
 	InputManager();
 	short GetCurrentInput();
+	void ClearQueue();
 	void ProcessInput();
 	~InputManager();
 private:
