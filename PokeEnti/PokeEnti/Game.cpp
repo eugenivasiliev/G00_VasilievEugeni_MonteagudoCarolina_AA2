@@ -9,6 +9,8 @@ Game::Game()
 }
 
 Game::Game(const Data &data) :
+	m_canWin(true),
+	m_hasMewtwo(false),
 	isInCombat(EMPTY_PAIR),
 	m_pokemonHealth(data.m_pokemonHealth), m_mewtwoHealth(data.m_mewtwoHealth), m_attackDamage(data.m_powerPikachu),
 	m_state(GameState::INIT),
@@ -137,6 +139,10 @@ void Game::gameLoop() {
 #pragma region UPDATE
 
 	m_map.update(m_player.getPosition(), m_player.getSprite(), m_player.getCapturedPokemon());
+	if(m_map.getZone(m_player.getPosition() == Zones::POKENTI_LEAGUE) {
+		if(!m_canWin) m_state = GameState::GAME_OVER;
+		if(m_hasMewtwo) m_state = GameState::GAME_WIN;
+	}
 
 #pragma endregion
 
@@ -148,7 +154,6 @@ void Game::gameLoop() {
 	if(msLeft > 0) Sleep(msLeft);
 
 #pragma endregion
-	return GameEnd::CONTINUE;
 }
 
 void Game::gameOver() {
@@ -227,13 +232,21 @@ void Game::combat(std::pair<int, int> pokemonPosition) {
 	switch(option) {
 		case CombatMenu::NONE_ATTACK:
 			if(tile == (Tiles)PkTiles::POKEMON_TILE) m_map.repositionPokemon(isInCombat);
-			else if(tile == (Tiles)PkTiles::MEWTWO_TILE) m_state = GameState::GAME_OVER;
+			else if(tile == (Tiles)PkTiles::MEWTWO_TILE) {
+				m_canWin = false;
+				m_map(isInCombat) = EnvTiles::EMPTY_TILE;
+			}
 			break;
 		case CombatMenu::NONE_CAPTURE:
-			m_map.repositionPokemon(isInCombat);
+			if(tile == (Tiles)PkTiles::POKEMON_TILE) m_map.repositionPokemon(isInCombat);
+			else if(tile == (Tiles)PkTiles::MEWTWO_TILE) m_hasMewtwo = true;
 			m_player.incrementPokemon(1);
 			break;
 		case CombatMenu::NONE_FLEE:
+			if(tile == (Tiles)PkTiles::MEWTWO_TILE) {
+				m_canWin = false;
+				m_map(isInCombat) = EnvTiles::EMPTY_TILE;
+			}
 			break;
 		default:
 			break;
@@ -242,9 +255,6 @@ void Game::combat(std::pair<int, int> pokemonPosition) {
 
 CombatMenu Game::combatMenu(const CombatMenu& currOption, std::ostringstream& buffer) {
 	clock_t time = clock();
-
-	//assert(static_cast<int>(currOption) < static_cast<int>(CombatMenu::COUNT) &&
-		//"Invalid combat menu option");
 
 	CombatMenu option = currOption;
 
