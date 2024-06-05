@@ -1,4 +1,4 @@
-#pragma once
+C#pragma once
 #include "Player.h"
 #include "Map.h"
 #include "ReadDoc.h"
@@ -27,7 +27,8 @@ enum class GameState {
 	MAIN_MENU,
 	GAME,
 	GAME_OVER,
-	GAME_WIN
+	GAME_WIN,
+	ESCAPE
 };
 
 enum class MenuOptions {
