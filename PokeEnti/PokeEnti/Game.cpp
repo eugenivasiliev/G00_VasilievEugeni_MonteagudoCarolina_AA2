@@ -49,10 +49,9 @@ bool Game::playGame() {
 	return true;
 }
 
-bool Game::init() {
+void Game::init() {
 	std::cout << "Title Screen" << std::endl;
 	Sleep(3000);
-	return true;
 }
 
 MenuOptions Game::mainMenu(const MenuOptions &currOption) {
