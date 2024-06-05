@@ -40,8 +40,8 @@ public:
 	int getHeight() const;
 	std::pair<int, int> checkPokemon(std::pair<int, int> position);
 	Zones getZone(const std::pair<int, int>& position) const;
-	Tiles operator() (const std::pair<int, int> &position) const;
-	Tiles operator() (const int &x, const int &y) const;
+	Tiles& operator() (const std::pair<int, int> &position) const;
+	Tiles& operator() (const int &x, const int &y) const;
 	void repositionPokemon(std::pair<int, int> position);
 	void movePokemons();
 	void placePokeball(const Zones& zone);
