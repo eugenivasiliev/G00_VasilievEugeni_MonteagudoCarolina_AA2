@@ -1,15 +1,16 @@
 #include "Camera.h"
 #include <iostream>
 
-Camera::Camera() : m_position(std::make_pair(0, 0)), m_width(0), m_height(0), m_map(nullptr){}
+Camera::Camera() : m_position(std::make_pair(0, 0)), m_width(0), m_height(0), m_map(nullptr) {}
 
 Camera::Camera(const std::pair<int, int>& position, const int& width, const int& height, Map* map) : 
 	m_position(position), 
 	m_width(width), m_height(height), 
-	m_map(map){}
+	m_map(map) {}
 
-
-void Camera::draw(std::ostringstream& buffer) {
+void Camera::draw() {
+	//Render map
+	m_buffer << "\033[1;1H";
 	for (int i = m_position.first; i < m_height + m_position.first; ++i) {
 		for (int j = m_position.second; j < m_width + m_position.second; ++j) {
 			Tiles tile = (*m_map)(i, j);
@@ -18,7 +19,6 @@ void Camera::draw(std::ostringstream& buffer) {
 			case static_cast<int>(Tiles_INDICES::EnvTiles):
 				if(tile == (Tiles)EnvTiles::EMPTY_TILE) m_buffer << "\033[0;0;0m ";
 				else if (tile == (Tiles)EnvTiles::WALL_TILE) m_buffer << "\033[47m\033[1;37mX";
-				else if (tile == (Tiles)EnvTiles::POKEMON_TILE) m_buffer << "\033[0;33mP";
 				break;
 			case static_cast<int>(Tiles_INDICES::PlTiles):
 				m_buffer << "\033[0;32;1m";
@@ -26,6 +26,9 @@ void Camera::draw(std::ostringstream& buffer) {
 				else if (tile == (Tiles)PlTiles::UP_SPRITE) m_buffer << "^";
 				else if (tile == (Tiles)PlTiles::RIGHT_SPRITE) m_buffer << ">";
 				else if (tile == (Tiles)PlTiles::DOWN_SPRITE) m_buffer << "v";
+				break;
+			case static_cast<int>(Tiles_INDICES::PkTiles):
+				if (tile == (Tiles)PkTiles::POKEMON_TILE) m_buffer << "\033[0;33mP";
 				break;
 			default:
 				assert(false && "Undrawable tile");
@@ -36,7 +39,7 @@ void Camera::draw(std::ostringstream& buffer) {
 		}
 		m_buffer << std::endl;
 	}
-	buffer << m_buffer.str();
+	std::cout << m_buffer.str();
 	m_buffer.str("");
 	m_buffer.clear();
 }
