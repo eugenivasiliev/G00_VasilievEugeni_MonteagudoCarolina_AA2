@@ -1,16 +1,15 @@
 #include "Camera.h"
 #include <iostream>
 
-Camera::Camera() : m_position(std::make_pair(0, 0)), m_width(0), m_height(0), m_map(nullptr) {}
+Camera::Camera() : m_position(std::make_pair(0, 0)), m_width(0), m_height(0), m_map(nullptr){}
 
 Camera::Camera(const std::pair<int, int>& position, const int& width, const int& height, Map* map) : 
 	m_position(position), 
 	m_width(width), m_height(height), 
-	m_map(map) {}
+	m_map(map){}
 
-void Camera::draw() {
-	//Render map
-	m_buffer << "\033[1;1H";
+
+void Camera::draw(std::ostringstream& buffer) {
 	for (int i = m_position.first; i < m_height + m_position.first; ++i) {
 		for (int j = m_position.second; j < m_width + m_position.second; ++j) {
 			Tiles tile = (*m_map)(i, j);
@@ -37,7 +36,7 @@ void Camera::draw() {
 		}
 		m_buffer << std::endl;
 	}
-	std::cout << m_buffer.str();
+	buffer << m_buffer.str();
 	m_buffer.str("");
 	m_buffer.clear();
 }

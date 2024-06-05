@@ -76,9 +76,18 @@ bool Game::gameLoop() {
 
 #pragma endregion
 #pragma region RENDER
-
-	m_camera.draw();
-	std::cout << std::endl << "Pokemon captured: " << m_player.getCapturedPokemon();
+	//Render map
+	m_buffer << "\033[1;1H";
+	//cabezera
+	m_buffer << "\033[1;31mPokemons capturados:\033[1;32m[" << m_player.getCapturedPokemon() << "] ";
+	m_buffer << "\033[1;31mPokeballs:\033[1;32m[" << 10 << "]\033[0m\n";
+	//m_buffer << "       \033[1;32m[" << m_cityName << "]\033[0m\n";
+	m_buffer << std::endl;
+	m_camera.draw(m_buffer);
+	std::cout << m_buffer.str();
+	m_buffer.str("");
+	m_buffer.clear();
+	
 
 #pragma endregion
 #pragma region FRAME CONTROL

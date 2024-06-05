@@ -23,6 +23,7 @@ public:
 	bool gameLoop();
 	void hideCursor();
 private:
+	std::ostringstream m_buffer;
 	InputManager m_inputManager;
 	Map m_map;
 	Camera m_camera;
