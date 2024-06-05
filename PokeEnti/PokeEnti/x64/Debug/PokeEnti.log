@@ -1,12 +1,12 @@
-﻿  Camera.cpp
+﻿  Player.cpp
+  Camera.cpp
   Game.cpp
-  Map.cpp
-  Player.cpp
-  Util.cpp
+  InputManager.cpp
   main.cpp
-C:\Users\Eugeni\Desktop\GitProjects\G00_VasilievEugeni_MonteagudoCarolina_AA2\PokeEnti\PokeEnti\main.cpp(10,12): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+C:\Users\Carol\Desktop\estudio\ENTI\Proyecto_I\juegoProyecto_I\G00_VasilievEugeni_MonteagudoCarolina_AA2\PokeEnti\PokeEnti\main.cpp(10,12): warning C4244: 'argumento': conversión de 'time_t' a 'unsigned int'; posible pérdida de datos
+  Map.cpp
+  ReadDoc.cpp
+  Util.cpp
   Generando código...
-C:\Users\Eugeni\Desktop\GitProjects\G00_VasilievEugeni_MonteagudoCarolina_AA2\PokeEnti\PokeEnti\Util.cpp(19): warning C4715: 'operator+': no todas las rutas de acceso de control devuelven un valor
-  PokeEnti.vcxproj -> C:\Users\Eugeni\Desktop\GitProjects\G00_VasilievEugeni_MonteagudoCarolina_AA2\PokeEnti\x64\Debug\PokeEnti.exe
-  "pwsh.exe" no se reconoce como un comando interno o externo,
-  programa o archivo por lotes ejecutable.
+C:\Users\Carol\Desktop\estudio\ENTI\Proyecto_I\juegoProyecto_I\G00_VasilievEugeni_MonteagudoCarolina_AA2\PokeEnti\PokeEnti\Util.cpp(19): warning C4715: 'operator+': no todas las rutas de acceso de control devuelven un valor
+  PokeEnti.vcxproj -> C:\Users\Carol\Desktop\estudio\ENTI\Proyecto_I\juegoProyecto_I\G00_VasilievEugeni_MonteagudoCarolina_AA2\PokeEnti\x64\Debug\PokeEnti.exe

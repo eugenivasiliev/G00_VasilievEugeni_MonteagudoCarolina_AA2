@@ -62,7 +62,7 @@ bool Game::gameLoop() {
 	m_inputManager.ProcessInput();
 	short input = m_inputManager.GetCurrentInput();
 
-	if (VK_UP <= input && input <= VK_DOWN) {
+	if (VK_LEFT <= input && input <= VK_DOWN) {
 		m_camera.move(input, m_player.getPosition());
 		m_player.move(input, m_map);
 	}
