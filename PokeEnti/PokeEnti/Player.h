@@ -15,8 +15,9 @@ public:
 	PlTiles getSprite() const;
 	int getCapturedPokemon() const;
 	int getPokeballCount() const;
+	void decreasePokeball();
 	void move(const short &direction, Map &tiles);
-	void incrementPokemon(const bool &captured);
+	void incrementPokemon(const int &captured);
 	void getPokeball();
 	~Player();
 private:
