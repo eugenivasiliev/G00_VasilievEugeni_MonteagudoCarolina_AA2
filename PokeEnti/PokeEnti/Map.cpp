@@ -173,11 +173,11 @@ void Map::placePokeball(const Zones &zone) {
 	m_tiles[newPokeballPos.first][newPokeballPos.second] = ObTiles::POKEBALL_TILE;
 }
 
-Tiles Map::operator() (const std::pair<int, int>& position) const {
+Tiles& Map::operator() (const std::pair<int, int>& position) const {
 	return m_tiles[position.first][position.second];
 }
 
-Tiles Map::operator() (const int &x, const int &y) const {
+Tiles& Map::operator() (const int &x, const int &y) const {
 	return m_tiles[x][y];
 }
 
