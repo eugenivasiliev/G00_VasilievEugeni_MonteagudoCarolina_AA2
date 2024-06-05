@@ -20,7 +20,11 @@ int Player::getPokeballCount() const {
 	return m_pokeballCount;
 }
 
-void Player::incrementPokemon(const bool &captured) {
+void Player::decreasePokeball() {
+	m_pokeballCount--;
+}
+
+void Player::incrementPokemon(const int &captured) {
 	m_capturedPokemon += captured;
 }
 
