@@ -113,7 +113,6 @@ GameEnd Game::gameLoop() {
 	if (isInCombat != EMPTY_PAIR) {
 		//m_inputManager.ClearQueue();
 		combat(isInCombat);
-		m_map.repositionPokemon(isInCombat);
 		isInCombat = EMPTY_PAIR;
 		system("cls");
 	}
@@ -149,7 +148,6 @@ void Game::gameWin() {
 
 void Game::combat(std::pair<int, int> pokemonPosition) {
 	std::ostringstream buffer;
-	int numPokeballs = 10;
 	std::cout << "\033[s";
 	std::string name;
 	int health;
@@ -177,10 +175,10 @@ void Game::combat(std::pair<int, int> pokemonPosition) {
 			option = CombatMenu::NONE_ATTACK;
 			break;
 		case CombatMenu::CAPTURE:
-			if (numPokeballs > 0) {
-				numPokeballs--;
+			if (m_player.getPokeballCount() > 0) {
+				m_player.decreasePokeball();
 				if (tile == (Tiles)PkTiles::POKEMON_TILE)
-					inCombat = rand() % (m_pokemonHealth * 7 / 6) <= health;
+					inCombat = rand() % (m_pokemonHealth * 6 / 5) <= health;
 				else if (tile == (Tiles)PkTiles::MEWTWO_TILE)
 					inCombat = rand() % (m_mewtwoHealth * 7 / 6) <= health;
 			}
@@ -191,6 +189,19 @@ void Game::combat(std::pair<int, int> pokemonPosition) {
 			option = CombatMenu::NONE_FLEE;
 			break;
 		}
+	}
+	switch(option) {
+		case CombatMenu::NONE_ATTACK:
+			m_map.repositionPokemon(isInCombat);
+			break;
+		case CombatMenu::NONE_CAPTURE:
+			m_map.repositionPokemon(isInCombat);
+			m_player.incrementPokemon(1);
+			break;
+		case CombatMenu::NONE_FLEE:
+			break;
+		default:
+			break;
 	}
 }
 
